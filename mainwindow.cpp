@@ -60,25 +60,17 @@ void MainWindow::on_pushButton_2_clicked()
      "",tr("Files .txt"));
     ui->plainTextEdit_2->appendPlainText(ui->plainTextEdit->toPlainText() + "hoi");
 
-    //QString tekst = ui->plainTextEdit->toPlainText();
-    //QStringList regels = tekst.split("\n");
+    QString tekst = ui->plainTextEdit->toPlainText();
+    QStringList regels = tekst.split("\n");
 
+    for(int i = 0; i < regels.count(); i++)
+     {
 
-    //std::string tekst = ui->plainTextEdit->toPlainText();
-    //std::stringbuf regels = tekst.split("\n");
+        //std::string naampie = regels[i].toUtf8().constData();
+        QByteArray naampie = regels[i].toLatin1();
+        serial->write(naampie);
+    }
 
-    //ui->plainTextEdit_2->appendPlainText(regels[0]);
-    //ui->plainTextEdit_2->appendPlainText("jemoer");
-    //ui->plainTextEdit_2->appendPlainText(regels[1]);
-    //char *cs = "list";
-    //for(int i = 0; i < regels.count(); i++)
-    // {
-         // naampie = regels[i].toUtf8().constData();
-
-    // }
-
-     char *c = "list";
-     serial->write(c);
      serial->close();
 
 }
