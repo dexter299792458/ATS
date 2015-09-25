@@ -5,6 +5,7 @@
 #include <ios>
 #include <stdio.h>
 #include <QSerialPort>
+#include <unistd.h>
 
 QSerialPort *serial;
 
@@ -56,9 +57,9 @@ void MainWindow::on_pushButton_2_clicked()
 {
     connect(serial,SIGNAL(readyRead()),this,SLOT(serialReveiced()));
 
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
-     "",tr("Files .txt"));
-    ui->plainTextEdit_2->appendPlainText(ui->plainTextEdit->toPlainText() + "hoi");
+    //QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
+     //"",tr("Files .txt"));
+    //ui->plainTextEdit_2->appendPlainText(ui->plainTextEdit->toPlainText() + "\x00D");
 
     QString tekst = ui->plainTextEdit->toPlainText();
     QStringList regels = tekst.split("\n");
@@ -68,7 +69,7 @@ void MainWindow::on_pushButton_2_clicked()
 
         //std::string naampie = regels[i].toUtf8().constData();
         QByteArray naampie = regels[i].toLatin1();
-        serial->write(naampie);
+        serial->write(naampie + "\x00D");
     }
 
      serial->close();
