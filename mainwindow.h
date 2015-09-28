@@ -26,6 +26,10 @@ private slots:
 
     void on_disconnectButton_clicked();
 
+    void on_clear_editorButton_clicked();
+
+    void on_clear_consoleButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

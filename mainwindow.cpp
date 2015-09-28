@@ -29,7 +29,10 @@ void MainWindow::serialReveiced()
 MainWindow::~MainWindow()
 {
     delete ui;
-    serial->close();
+    if(serialDef == 1)
+    {
+        serial->close();
+    }
 }
 
 void MainWindow::on_openButton_clicked()
@@ -66,36 +69,66 @@ void MainWindow::on_saveButton_clicked()
     }
     else
     {
-        ui->plainTextEdit->appendPlainText("Please connect... \n");
+        ui->plainTextEdit_2->appendPlainText("Please connect... \n");
     }
 }
 
 void MainWindow::on_connectButton_clicked()
 {
-    serial = new QSerialPort(this);
-    serial->setPortName("COM1");
-    serial->setBaudRate(QSerialPort::Baud9600);
-    serial->setDataBits(QSerialPort::Data8);
-    serial->setParity(QSerialPort::NoParity);
-    serial->setStopBits(QSerialPort::OneStop);
-    serial->setFlowControl(QSerialPort::NoFlowControl);
-    serial->open(QIODevice::ReadWrite);
-    connect(serial,SIGNAL(readyRead()),this,SLOT(serialReveiced()));
-    if (serial->isOpen())
+    if (serialDef == 1)
     {
-        ui->lineEdit->setStyleSheet("QLineEdit{background: green;}");
-        ui->lineEdit->setText("Connected");
-        serialDef = 1;
+        if (ui->dropdownList->currentText() == serial->portName())
+        {
+            ui->plainTextEdit_2->appendPlainText("COM port already connected \n");
+        }
+        else
+        {
+            ui->plainTextEdit_2->appendPlainText("Disconnect with current COM first \n");
+        }
+    }
+    else
+    {
+        serial = new QSerialPort(this);
+        serial->setPortName(ui->dropdownList->currentText());
+        serial->setBaudRate(QSerialPort::Baud9600);
+        serial->setDataBits(QSerialPort::Data8);
+        serial->setParity(QSerialPort::NoParity);
+        serial->setStopBits(QSerialPort::OneStop);
+        serial->setFlowControl(QSerialPort::NoFlowControl);
+        serial->open(QIODevice::ReadWrite);
+        connect(serial,SIGNAL(readyRead()),this,SLOT(serialReveiced()));
+        if (serial->isOpen())
+        {
+            ui->lineEdit->setStyleSheet("QLineEdit{background: green;}");
+            ui->lineEdit->setText("Connected");
+            serialDef = 1;
+        }
+        else
+        {
+            ui->lineEdit->setStyleSheet("QLineEdit{background: red;}");
+            ui->lineEdit->setText("Connecting failed...");
+            serial->close();
+        }
     }
 }
 
 void MainWindow::on_disconnectButton_clicked()
 {
-    serial->close();
-    if (serial->isOpen() == 0)
+    if (serialDef == 1)
     {
+        serial->close();
         ui->lineEdit->setStyleSheet("QLineEdit{background: red;}");
         ui->lineEdit->setText("Disconnected");
         serialDef = 0;
     }
+}
+
+void MainWindow::on_clear_editorButton_clicked()
+{
+    ui->plainTextEdit->clear();
+}
+
+void MainWindow::on_clear_consoleButton_clicked()
+{
+    ui->plainTextEdit_2->clear();
 }
