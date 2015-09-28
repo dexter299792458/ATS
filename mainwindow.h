@@ -16,13 +16,15 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_3_clicked();
+    void on_openButton_clicked();
 
-    void on_pushButton_2_clicked();
+    void on_saveButton_clicked();
 
-    void on_pushButton_clicked();
+    void on_connectButton_clicked();
 
-    void serialRecieved();
+    void serialReveiced();
+
+    void on_disconnectButton_clicked();
 
 private:
     Ui::MainWindow *ui;

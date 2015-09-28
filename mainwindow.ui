@@ -47,8 +47,11 @@
        <height>20</height>
       </rect>
      </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
     </widget>
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="connectButton">
      <property name="geometry">
       <rect>
        <x>96</x>
@@ -119,7 +122,7 @@
       <string>Load program</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_7">
+    <widget class="QPushButton" name="disconnectButton">
      <property name="geometry">
       <rect>
        <x>177</x>
@@ -173,7 +176,7 @@
       <string/>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_2">
+    <widget class="QPushButton" name="saveButton">
      <property name="geometry">
       <rect>
        <x>590</x>
@@ -186,7 +189,7 @@
       <string>Save</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_3">
+    <widget class="QPushButton" name="openButton">
      <property name="geometry">
       <rect>
        <x>670</x>

@@ -1,41 +1,38 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QSerialPort>
 #include <QFileDialog>
 #include <QTextStream>
 #include <ios>
 #include <stdio.h>
-#include <QSerialPort>
-#include <unistd.h>
+#include <time.h>
+#include <dos.h>
+#include <windows.h>
 
 QSerialPort *serial;
+int serialDef = 0;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->lineEdit->setStyleSheet("QLineEdit{background: red;}");
+    ui->lineEdit->setText("Please connect...");
+}
 
-    serial = new QSerialPort(this);
-    serial->setPortName("COM1");
-    serial->setBaudRate(QSerialPort::Baud9600);
-    serial->setDataBits(QSerialPort::Data8);
-    serial->setParity(QSerialPort::NoParity);
-    serial->setStopBits(QSerialPort::OneStop);
-    serial->setFlowControl(QSerialPort::NoFlowControl);
-    serial->open(QIODevice::ReadWrite);
+void MainWindow::serialReveiced()
+{
+    ui->plainTextEdit_2->appendPlainText(serial->readAll());
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    serial->close();
 }
 
-void MainWindow::serialRecieved()
-{
-
-}
-
-void MainWindow::on_pushButton_3_clicked()
+void MainWindow::on_openButton_clicked()
 {
    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
     "",tr("Files *.txt"));
@@ -53,30 +50,52 @@ void MainWindow::on_pushButton_3_clicked()
    }
 }
 
-void MainWindow::on_pushButton_2_clicked()
+void MainWindow::on_saveButton_clicked()
 {
-    connect(serial,SIGNAL(readyRead()),this,SLOT(serialReveiced()));
-
-    //QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
-     //"",tr("Files .txt"));
-    //ui->plainTextEdit_2->appendPlainText(ui->plainTextEdit->toPlainText() + "\x00D");
-
-    QString tekst = ui->plainTextEdit->toPlainText();
-    QStringList regels = tekst.split("\n");
-
-    for(int i = 0; i < regels.count(); i++)
-     {
-
-        //std::string naampie = regels[i].toUtf8().constData();
-        QByteArray naampie = regels[i].toLatin1();
-        serial->write(naampie + "\x00D");
+    if (serialDef == 1)
+    {
+        QString tekst = ui->plainTextEdit->toPlainText();
+        QStringList regels = tekst.split("\n");
+        for(int i = 0; i < regels.count(); i++)
+        {
+             QByteArray naampie = (regels[i].toLatin1() + "\x00D");
+             serial->write(naampie);
+             //Sleep(1000);
+        }
+        ui->plainTextEdit->clear();
     }
-
-     serial->close();
-
+    else
+    {
+        ui->plainTextEdit->appendPlainText("Please connect... \n");
+    }
 }
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_connectButton_clicked()
 {
+    serial = new QSerialPort(this);
+    serial->setPortName("COM1");
+    serial->setBaudRate(QSerialPort::Baud9600);
+    serial->setDataBits(QSerialPort::Data8);
+    serial->setParity(QSerialPort::NoParity);
+    serial->setStopBits(QSerialPort::OneStop);
+    serial->setFlowControl(QSerialPort::NoFlowControl);
+    serial->open(QIODevice::ReadWrite);
+    connect(serial,SIGNAL(readyRead()),this,SLOT(serialReveiced()));
+    if (serial->isOpen())
+    {
+        ui->lineEdit->setStyleSheet("QLineEdit{background: green;}");
+        ui->lineEdit->setText("Connected");
+        serialDef = 1;
+    }
+}
 
+void MainWindow::on_disconnectButton_clicked()
+{
+    serial->close();
+    if (serial->isOpen() == 0)
+    {
+        ui->lineEdit->setStyleSheet("QLineEdit{background: red;}");
+        ui->lineEdit->setText("Disconnected");
+        serialDef = 0;
+    }
 }
