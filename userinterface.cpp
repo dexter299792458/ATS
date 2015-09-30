@@ -34,19 +34,24 @@ UserInterface::~UserInterface()
 
 void UserInterface::on_Connect_clicked()
 {
-    m_SerialPortManager = SerialPortManager::GetInstance();
-    m_SerialPortManager->OpenSerialConnection();
-    ui->ConnectionStatus->setText("Connected to: " + ui->ScanPorts->currentText());
-    ui->ConnectionStatus->setStyleSheet("QLineEdit{background: lightgreen;}");
-
+    if (ui->ScanPorts->currentText() != "Scan ports...")
+    {
+        m_SerialPortManager = SerialPortManager::GetInstance();
+        m_SerialPortManager->OpenSerialConnection();
+        ui->ConnectionStatus->setText("Connected to: " + ui->ScanPorts->currentText());
+        ui->ConnectionStatus->setStyleSheet("QLineEdit{background: lightgreen;}");
+    }
 }
 
 void UserInterface::on_Disconnect_clicked()
 {
-    m_SerialPortManager = SerialPortManager::GetInstance();
-    m_SerialPortManager->CloseSerialConnection();
-    ui->ConnectionStatus->setText("Disconnected from: " + ui->ScanPorts->currentText());
-    ui->ConnectionStatus->setStyleSheet("QLineEdit{background: red;}");
+    if (ui->ScanPorts->currentText() != "Scan ports...")
+    {
+        m_SerialPortManager = SerialPortManager::GetInstance();
+        m_SerialPortManager->CloseSerialConnection();
+        ui->ConnectionStatus->setText("Disconnected from: " + ui->ScanPorts->currentText());
+        ui->ConnectionStatus->setStyleSheet("QLineEdit{background: red;}");
+    }
 }
 
 void UserInterface::on_LoadProgram_clicked()
