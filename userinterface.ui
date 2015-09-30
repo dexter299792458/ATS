@@ -29,7 +29,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>UserInterface</string>
+   <string>Scorbot ATS</string>
   </property>
   <property name="documentMode">
    <bool>false</bool>
