@@ -6,7 +6,9 @@
 #include <stdio.h>
 #include <QStringList>
 #include <QSerialPortInfo>
+#include <QString>
 #include <QDebug>
+#include "userinterface.h"
 
 //Class members
 SerialPortManager* SerialPortManager::instance = 0;
@@ -34,16 +36,13 @@ SerialPortManager* SerialPortManager::GetInstance()
     return instance;
 }
 
-void SerialPortManager::SerialReveiced()
-{
 
-}
 
 //Open de seriele connectie en connect
 void SerialPortManager::OpenSerialConnection()
 {
     serialport->open(QIODevice::ReadWrite);
-    QSerialPort::connect(serialport,SIGNAL(readyRead()),this,SLOT(SerialPortManager::SerialReveiced()));
+    QSerialPort::connect(serialport,SIGNAL(readyRead()),this,SLOT(UserInterface::SerialReceived(serialport->readAll())));
 }
 
 void SerialPortManager::CloseSerialConnection()
@@ -52,6 +51,9 @@ void SerialPortManager::CloseSerialConnection()
 }
 
 void SerialPortManager::WriteMultipleACLCommands(){}
-void SerialPortManager::WriteSingleACLCommand(){}
+void SerialPortManager::WriteSingleACLCommand(QString ACLCommand)
+{
+    serialport->write(ACLCommand.toLatin1());
+}
 
 

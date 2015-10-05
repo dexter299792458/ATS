@@ -156,7 +156,7 @@
     <property name="title">
      <string>Program Editor</string>
     </property>
-    <widget class="QPlainTextEdit" name="plainTextEdit">
+    <widget class="QPlainTextEdit" name="ProgramEditorBox">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -218,7 +218,7 @@
     <property name="title">
      <string>Console</string>
     </property>
-    <widget class="QPlainTextEdit" name="plainTextEdit_2">
+    <widget class="QPlainTextEdit" name="ConsoleBox">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -239,6 +239,19 @@
      </property>
      <property name="text">
       <string>Clear Screen</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="SendConsole">
+     <property name="geometry">
+      <rect>
+       <x>680</x>
+       <y>170</y>
+       <width>21</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&gt;</string>
      </property>
     </widget>
    </widget>

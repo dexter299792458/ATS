@@ -5,7 +5,7 @@
 class SerialPortManager : QMainWindow
 {
 private:
-    static SerialPortManager* instance;
+    static SerialPortManager* instance;    
      Q_OBJECT
 protected:
     SerialPortManager();
@@ -13,9 +13,7 @@ public:
     static SerialPortManager* GetInstance();
     void OpenSerialConnection();
     void CloseSerialConnection();
-    void WriteSingleACLCommand();
+    void WriteSingleACLCommand(QString);
     void WriteMultipleACLCommands();
-    void SerialReveiced();
-
 };
 #endif // SERIALPORTMANAGER_H

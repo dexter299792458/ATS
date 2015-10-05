@@ -1,6 +1,8 @@
 #ifndef USERINTERFACE_H
 #define USERINTERFACE_H
-
+#include "serialportmanager.h"
+#include "console.h"
+#include "programeditor.h"
 #include <QMainWindow>
 
 namespace Ui {
@@ -13,6 +15,7 @@ class UserInterface : public QMainWindow
 
 public:
     explicit UserInterface(QWidget *parent = 0);
+    void SerialReceived(QByteArray);
     ~UserInterface();
 
 private slots:
@@ -34,10 +37,14 @@ private slots:
 
     void on_ClearScreenConsole_clicked();
 
-    void on_ScanPorts_activated(const QString &arg1);
+    void on_ScanPorts_activated(const QString &arg1); 
+    void on_SendConsole_clicked();
 
 private:
     Ui::UserInterface *ui;
+    SerialPortManager *singleton_SerialPortManager;
+    Console m_Console;
+    ProgramEditor m_ProgramEditor;
 };
 
 #endif // USERINTERFACE_H
