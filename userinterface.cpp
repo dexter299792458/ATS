@@ -74,7 +74,7 @@ void UserInterface::on_ReadProgram_clicked()
 
 void UserInterface::on_ClearScreenProgramEditor_clicked()
 {
-
+    ui->plainTextEdit->clear();
 }
 
 void UserInterface::on_SaveProgram_clicked()
@@ -89,7 +89,7 @@ void UserInterface::on_OpenProgram_clicked()
 
 void UserInterface::on_ClearScreenConsole_clicked()
 {
-
+    ui->plainTextEdit_2->clear();
 }
 
 void UserInterface::on_ScanPorts_activated(const QString &arg1)
