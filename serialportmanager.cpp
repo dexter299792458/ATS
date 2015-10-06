@@ -18,12 +18,6 @@ QSerialPort *serialport;
 SerialPortManager::SerialPortManager()
 {
     serialport = new QSerialPort();
-    serialport->setPortName("COM1");
-    serialport->setBaudRate(QSerialPort::Baud9600);
-    serialport->setDataBits(QSerialPort::Data8);
-    serialport->setParity(QSerialPort::NoParity);
-    serialport->setStopBits(QSerialPort::OneStop);
-    serialport->setFlowControl(QSerialPort::NoFlowControl);
 }
 
 //Singleton implementatie
@@ -34,6 +28,16 @@ SerialPortManager* SerialPortManager::GetInstance()
        instance = new SerialPortManager;
     }
     return instance;
+}
+
+void SerialPortManager::InitializeSerialConnection(QString connectToPort)
+{
+    serialport->setPortName(connectToPort);
+    serialport->setBaudRate(QSerialPort::Baud9600);
+    serialport->setDataBits(QSerialPort::Data8);
+    serialport->setParity(QSerialPort::NoParity);
+    serialport->setStopBits(QSerialPort::OneStop);
+    serialport->setFlowControl(QSerialPort::NoFlowControl);
 }
 
 //Open de seriele connectie en connect

@@ -33,10 +33,11 @@ void UserInterface::on_Connect_clicked()
 {
     if (ui->ScanPorts->currentText() != "Scan ports...")
     {
-        singleton_SerialPortManager = SerialPortManager::GetInstance();
-        singleton_SerialPortManager->OpenSerialConnection();
         ui->ConnectionStatus->setText("Connected to: " + ui->ScanPorts->currentText());
         ui->ConnectionStatus->setStyleSheet("QLineEdit{background: lightgreen;}");
+        singleton_SerialPortManager = SerialPortManager::GetInstance();
+        singleton_SerialPortManager->InitializeSerialConnection(ui->ScanPorts->currentText());
+        singleton_SerialPortManager->OpenSerialConnection();
     }
 }
 

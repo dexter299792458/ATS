@@ -8,9 +8,11 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     UserInterface w;
     w.show();
-    //UserInterface* m_interface = new UserInterface();
+
+    //OO implementatie slot en signals.
     SerialPortManager *singleton_SerialPortManager = SerialPortManager::GetInstance();
     QWidget::connect(singleton_SerialPortManager, SIGNAL(Send(QByteArray&)),
                      &w, SLOT(SerialReceived(QByteArray&)));
+
     return a.exec();
 }

@@ -15,6 +15,7 @@ public:
     void CloseSerialConnection();
     void WriteSingleACLCommand(QString);
     void WriteMultipleACLCommands();
+    void InitializeSerialConnection(QString);
 
 public slots:
     void GiveReceivedDataToUI();
