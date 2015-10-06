@@ -40,7 +40,7 @@ SerialPortManager* SerialPortManager::GetInstance()
 void SerialPortManager::OpenSerialConnection()
 {
     serialport->open(QIODevice::ReadWrite);
-    QSerialPort::connect(serialport,SIGNAL(readyRead()),this,SLOT(UserInterface::SerialReceived()));
+    QSerialPort::connect(serialport,SIGNAL(readyRead()),this,SLOT(GiveReceivedDataToUI()));
 }
 
 void SerialPortManager::CloseSerialConnection()
@@ -54,9 +54,10 @@ void SerialPortManager::WriteSingleACLCommand(QString ACLCommand)
     serialport->write(ACLCommand.toLatin1());
 }
 
-QByteArray SerialPortManager::GiveReceivedDataToUI()
+void SerialPortManager::GiveReceivedDataToUI()
 {
-    return serialport->readAll();
+    QByteArray s = serialport->readAll();
+    emit Send(s);
 }
 
 

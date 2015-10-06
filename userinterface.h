@@ -15,8 +15,11 @@ class UserInterface : public QMainWindow
 
 public:
     explicit UserInterface(QWidget *parent = 0);
-    void SerialReceived(QByteArray);
+    QByteArray testje;
     ~UserInterface();
+
+public slots:
+    void SerialReceived(QByteArray& s);
 
 private slots:
     void on_Connect_clicked();

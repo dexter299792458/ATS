@@ -2,11 +2,11 @@
 #define SERIALPORTMANAGER_H
 #include <QMainWindow>
 
-class SerialPortManager : QMainWindow
+class SerialPortManager : public QObject
 {
-private:
-    static SerialPortManager* instance;    
      Q_OBJECT
+private:    
+    static SerialPortManager* instance;    
 protected:
     SerialPortManager();
 public:
@@ -15,6 +15,11 @@ public:
     void CloseSerialConnection();
     void WriteSingleACLCommand(QString);
     void WriteMultipleACLCommands();
-    QByteArray GiveReceivedDataToUI();
+
+public slots:
+    void GiveReceivedDataToUI();
+signals:
+    void Send(QByteArray& s);
+
 };
 #endif // SERIALPORTMANAGER_H

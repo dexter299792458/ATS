@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QLineEdit>
 #include <QFileDialog>
+#include <QScrollBar>
 
 UserInterface::UserInterface(QWidget *parent) :
     QMainWindow(parent),
@@ -57,10 +58,7 @@ void UserInterface::on_LoadProgram_clicked()
 
 void UserInterface::on_RunProgram_clicked()
 {
-   //QString tekst = ui->plainTextEdit->toPlainText();
-   //QStringList regels = tekst.split("\n");
-   //QByteArray naampie = (regels[i].toLatin1() + "\x00D");
-   //serial->write(naampie);
+
 }
 
 void UserInterface::on_ReadProgram_clicked()
@@ -120,14 +118,15 @@ void UserInterface::on_SendConsole_clicked()
 {
     QString allText = ui->ConsoleBox->toPlainText();
     QStringList splitAllText = allText.split("\n");
-    QString GetLastLine = splitAllText.last();
-    ui->ConsoleBox->appendPlainText(GetLastLine);
+    QString GetLastLine = splitAllText.last();   
     m_Console.ConvertConsoleLineToSingleACLCommand(GetLastLine);
+    ui->ConsoleBox->clear();
 }
 
-void UserInterface::SerialReceived(QByteArray received)
+void UserInterface::SerialReceived(QByteArray& s)
 {
     singleton_SerialPortManager = SerialPortManager::GetInstance();
-    received = singleton_SerialPortManager->GiveReceivedDataToUI();
-    ui->ConsoleBox->insertPlainText(received);
+    //s = singleton_SerialPortManager->GiveReceivedDataToUI();
+    ui->ConsoleBox->insertPlainText(s);
+    ui->ConsoleBox->verticalScrollBar()->setValue(ui->ConsoleBox->verticalScrollBar()->maximum());
 }
