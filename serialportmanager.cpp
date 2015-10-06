@@ -36,13 +36,11 @@ SerialPortManager* SerialPortManager::GetInstance()
     return instance;
 }
 
-
-
 //Open de seriele connectie en connect
 void SerialPortManager::OpenSerialConnection()
 {
     serialport->open(QIODevice::ReadWrite);
-    QSerialPort::connect(serialport,SIGNAL(readyRead()),this,SLOT(UserInterface::SerialReceived(serialport->readAll())));
+    QSerialPort::connect(serialport,SIGNAL(readyRead()),this,SLOT(UserInterface::SerialReceived()));
 }
 
 void SerialPortManager::CloseSerialConnection()
@@ -54,6 +52,11 @@ void SerialPortManager::WriteMultipleACLCommands(){}
 void SerialPortManager::WriteSingleACLCommand(QString ACLCommand)
 {
     serialport->write(ACLCommand.toLatin1());
+}
+
+QByteArray SerialPortManager::GiveReceivedDataToUI()
+{
+    return serialport->readAll();
 }
 
 

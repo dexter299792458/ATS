@@ -15,5 +15,6 @@ public:
     void CloseSerialConnection();
     void WriteSingleACLCommand(QString);
     void WriteMultipleACLCommands();
+    QByteArray GiveReceivedDataToUI();
 };
 #endif // SERIALPORTMANAGER_H

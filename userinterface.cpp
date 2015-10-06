@@ -127,5 +127,7 @@ void UserInterface::on_SendConsole_clicked()
 
 void UserInterface::SerialReceived(QByteArray received)
 {
+    singleton_SerialPortManager = SerialPortManager::GetInstance();
+    received = singleton_SerialPortManager->GiveReceivedDataToUI();
     ui->ConsoleBox->insertPlainText(received);
 }
