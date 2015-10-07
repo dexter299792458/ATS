@@ -35,7 +35,7 @@
    <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QGroupBox" name="groupBox">
+   <widget class="QGroupBox" name="ConnectionSettingsUIGroup">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -144,7 +144,7 @@
      </property>
     </widget>
    </widget>
-   <widget class="QGroupBox" name="groupBox_2">
+   <widget class="QGroupBox" name="ProgramEditorUIGroup">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -206,7 +206,7 @@
      </property>
     </widget>
    </widget>
-   <widget class="QGroupBox" name="groupBox_3">
+   <widget class="QGroupBox" name="ConsoleUIGroup">
     <property name="geometry">
      <rect>
       <x>10</x>

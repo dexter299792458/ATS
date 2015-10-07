@@ -1,9 +1,13 @@
 #ifndef USERINTERFACE_H
 #define USERINTERFACE_H
+#define STARTUP 0
+#define CONNECT 1
+#define DISCONNECT 0
 #include "serialportmanager.h"
 #include "console.h"
 #include "programeditor.h"
 #include <QMainWindow>
+#include <QListWidget>
 
 namespace Ui {
 class UserInterface;
@@ -48,6 +52,7 @@ private:
     SerialPortManager *singleton_SerialPortManager;
     Console m_Console;
     ProgramEditor m_ProgramEditor;
+    void GreyOutMenuItems(int);
 };
 
 #endif // USERINTERFACE_H

@@ -12,7 +12,6 @@
 
 //Class members
 SerialPortManager* SerialPortManager::instance = 0;
-QSerialPort *serialport;
 
 //Singleton constructor zorgt voor de RS232 initialisatie
 SerialPortManager::SerialPortManager()
@@ -30,6 +29,7 @@ SerialPortManager* SerialPortManager::GetInstance()
     return instance;
 }
 
+//Initialisatie van de seriele connectie
 void SerialPortManager::InitializeSerialConnection(QString connectToPort)
 {
     serialport->setPortName(connectToPort);
@@ -52,7 +52,11 @@ void SerialPortManager::CloseSerialConnection()
     serialport->close();
 }
 
-void SerialPortManager::WriteMultipleACLCommands(){}
+void SerialPortManager::WriteMultipleACLCommands()
+{
+
+}
+
 void SerialPortManager::WriteSingleACLCommand(QString ACLCommand)
 {
     serialport->write(ACLCommand.toLatin1());
@@ -60,8 +64,19 @@ void SerialPortManager::WriteSingleACLCommand(QString ACLCommand)
 
 void SerialPortManager::GiveReceivedDataToUI()
 {
-    QByteArray s = serialport->readAll();
+    QByteArray s;
+   // bool b = true;
+
+    //QByteArray loading = "Loading.....";
+    //emit Send(loading);
+   // while(serialport->bytesAvailable() > 0 && b == true )
+    //{
+       // b = serialport->waitForReadyRead();
+        s.append(serialport->readAll());
+   // }
     emit Send(s);
+    //QByteArray ss = "\n";
+    //emit Send(ss);
 }
 
 

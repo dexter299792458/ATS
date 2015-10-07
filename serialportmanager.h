@@ -1,12 +1,14 @@
 #ifndef SERIALPORTMANAGER_H
 #define SERIALPORTMANAGER_H
 #include <QMainWindow>
+#include <QSerialPort>
 
 class SerialPortManager : public QObject
 {
      Q_OBJECT
 private:    
-    static SerialPortManager* instance;    
+    static SerialPortManager* instance;
+    QSerialPort *serialport;
 protected:
     SerialPortManager();
 public:
