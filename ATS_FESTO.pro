@@ -16,11 +16,14 @@ SOURCES += main.cpp\
         userinterface.cpp \
     programeditor.cpp \
     serialportmanager.cpp \
-    console.cpp
+    console.cpp \
+    enterprogramname.cpp
 
 HEADERS  += userinterface.h \
     programeditor.h \
     serialportmanager.h \
-    console.h
+    console.h \
+    enterprogramname.h
 
-FORMS    += userinterface.ui
+FORMS    += userinterface.ui \
+    enterprogramname.ui

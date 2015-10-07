@@ -8,6 +8,7 @@
 #include "programeditor.h"
 #include <QMainWindow>
 #include <QListWidget>
+#include "enterprogramname.h"
 
 namespace Ui {
 class UserInterface;
@@ -19,11 +20,11 @@ class UserInterface : public QMainWindow
 
 public:
     explicit UserInterface(QWidget *parent = 0);
-    QByteArray testje;
     ~UserInterface();
 
 public slots:
     void SerialReceived(QByteArray& s);
+    void ProgramNameReceived(QString& programName);
 
 private slots:
     void on_Connect_clicked();
@@ -53,6 +54,7 @@ private:
     Console m_Console;
     ProgramEditor m_ProgramEditor;
     void GreyOutMenuItems(int);
+    EnterProgramName *enterprogramname;
 };
 
 #endif // USERINTERFACE_H

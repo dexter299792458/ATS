@@ -6,6 +6,7 @@
 #include <QLineEdit>
 #include <QFileDialog>
 #include <QScrollBar>
+#include "enterprogramname.h"
 
 UserInterface::UserInterface(QWidget *parent) :
     QMainWindow(parent),
@@ -67,7 +68,8 @@ void UserInterface::on_LoadProgram_clicked()
 
 void UserInterface::on_RunProgram_clicked()
 {
-
+    enterprogramname = new EnterProgramName(this);
+    enterprogramname->show();
 }
 
 void UserInterface::on_ReadProgram_clicked()
