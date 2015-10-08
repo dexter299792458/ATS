@@ -50,8 +50,6 @@ private slots:
 
     void on_ScanPorts_activated(const QString &arg1); 
 
-    void on_SendConsole_clicked();
-
     void on_ConsoleLine_returnPressed();
 
 private:

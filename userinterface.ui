@@ -250,25 +250,12 @@
       <string>Clear Screen</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="SendConsole">
-     <property name="geometry">
-      <rect>
-       <x>680</x>
-       <y>230</y>
-       <width>21</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>&gt;</string>
-     </property>
-    </widget>
     <widget class="QLineEdit" name="ConsoleLine">
      <property name="geometry">
       <rect>
        <x>100</x>
        <y>230</y>
-       <width>571</width>
+       <width>601</width>
        <height>20</height>
       </rect>
      </property>

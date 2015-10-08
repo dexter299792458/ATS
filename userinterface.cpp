@@ -159,15 +159,7 @@ void UserInterface::on_ScanPorts_activated(const QString &arg1)
     }
 }
 
-//Versturen van het commando dat ingetypt is in de console.
-void UserInterface::on_SendConsole_clicked()
-{
-    //QString allText = ui->ConsoleBox->toPlainText();
-    //QStringList splitAllText = allText.split("\n");
-    //QString GetLastLine = splitAllText.last();
-   // m_Console.ConvertConsoleLineToSingleACLCommand(GetLastLine);
-    //ui->ConsoleBox->clear();
-}
+
 
 //Wegschrijven van de ontvangen data van de seriele connectie in de Console of Program Editor
 void UserInterface::SerialReceived(QByteArray& s)

@@ -20,3 +20,5 @@ void ProgramEditor::RunProgram(QString runProgram)
     singleton_SerialPortManager = SerialPortManager::GetInstance();
     singleton_SerialPortManager->WriteSingleACLCommand("run\x20" + runProgram + "\x00D");
 }
+
+void ProgramEditor::ConvertProgramToSingleACLCommands(){}
