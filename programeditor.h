@@ -8,13 +8,13 @@ class ProgramEditor
 public:
     ProgramEditor();
     void ConvertProgramToSingleACLCommands();
-    void LoadProgramIntoController(QString);
+    void LoadProgramIntoController(QString, QString);
     void RunProgram(QString);
     void DisplayProgramFromMemory(QString);
 
 private:
     SerialPortManager *singleton_SerialPortManager;
-    QByteArray listOfSingleACLCommands;
+    QStringList listConversion;
 };
 
 #endif // PROGRAMEDITOR_H

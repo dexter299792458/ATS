@@ -90,8 +90,8 @@ void UserInterface::ProgramNameReceived()
     switch (useProgramNameForAction)
     {
         case LOAD:
-             ui->ProgramEditorBox->appendPlainText("LOADING PROGRAM: " + programName + "\n");
-            m_ProgramEditor.LoadProgramIntoController(programName);
+            m_ProgramEditor.LoadProgramIntoController(programName, ui->ProgramEditorBox->toPlainText());
+            //ui->ProgramEditorBox->appendPlainText("LOADING PROGRAM: " + programName + "\n");
             break;
         case RUN:
              ui->ProgramEditorBox->appendPlainText("RUNNING PROGRAM: " + programName + "\n");

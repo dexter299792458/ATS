@@ -17,7 +17,7 @@ public:
     void OpenSerialConnection();
     void CloseSerialConnection();
     void WriteSingleACLCommand(QString, bool);
-    void WriteMultipleACLCommands();
+    void WriteMultipleACLCommands(QStringList);
     void InitializeSerialConnection(QString);
 
 public slots:

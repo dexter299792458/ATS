@@ -8,7 +8,6 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     UserInterface w;
-    EnterProgramName enter;
     w.show();
 
     //Voor een goed Object Georienteerd ontwerp is het van belang dat de klassen

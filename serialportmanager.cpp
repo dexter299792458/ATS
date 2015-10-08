@@ -53,9 +53,15 @@ void SerialPortManager::CloseSerialConnection()
     serialport->close();
 }
 
-void SerialPortManager::WriteMultipleACLCommands()
+void SerialPortManager::WriteMultipleACLCommands(QStringList receivedACLCommands)
 {
+    //QString enter = "\x00D";
+    for(int i = 0; i < receivedACLCommands.count(); i++ )
+    {
+        QByteArray s = receivedACLCommands[i].toLatin1();
+        serialport->write(s);
 
+    }
 }
 
 void SerialPortManager::WriteSingleACLCommand(QString ACLCommand, bool RequestFromConsoleOrProgramEditor)
