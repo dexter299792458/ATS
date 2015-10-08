@@ -2,11 +2,13 @@
 #include <QApplication>
 #include "serialportmanager.h"
 #include "userinterface.h"
+#include "enterprogramname.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     UserInterface w;
+    EnterProgramName enter;
     w.show();
 
     //Voor een goed Object Georienteerd ontwerp is het van belang dat de klassen
@@ -14,8 +16,6 @@ int main(int argc, char *argv[])
     //Door middel van SIGNALS en SLOTS kunnnen deze klassen toch op een nette manier data versturen
     //naar de UserInterface klasse.
     SerialPortManager *singleton_SerialPortManager = SerialPortManager::GetInstance();
-    QWidget::connect(singleton_SerialPortManager, SIGNAL(Send(QByteArray&)),
-                     &w, SLOT(SerialReceived(QByteArray&)));
-
+    QWidget::connect(singleton_SerialPortManager, SIGNAL(Send(QByteArray&)),&w, SLOT(SerialReceived(QByteArray&)));      
     return a.exec();
 }

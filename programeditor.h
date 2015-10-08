@@ -8,11 +8,9 @@ class ProgramEditor
 public:
     ProgramEditor();
     void ConvertProgramToSingleACLCommands();
-    void LoadProgramIntoController();
-    void RunProgram();
-    void OpenProgram();
-    void SaveProgram();
-    void DisplayProgramFromMemory();
+    void LoadProgramIntoController(QString);
+    void RunProgram(QString);
+    void DisplayProgramFromMemory(QString);
 
 private:
     SerialPortManager *singleton_SerialPortManager;

@@ -1,5 +1,6 @@
 #include "enterprogramname.h"
 #include "ui_enterprogramname.h"
+#include <QDebug>
 
 EnterProgramName::EnterProgramName(QWidget *parent) :
     QDialog(parent),
@@ -12,4 +13,14 @@ EnterProgramName::EnterProgramName(QWidget *parent) :
 EnterProgramName::~EnterProgramName()
 {
     delete ui;
+}
+
+void EnterProgramName::on_buttonBox_accepted()
+{
+
+}
+
+QString EnterProgramName::ReturnEnteredProgramName()
+{
+    return ui->lineEdit->text();
 }

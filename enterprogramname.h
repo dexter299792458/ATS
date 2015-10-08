@@ -13,10 +13,16 @@ class EnterProgramName : public QDialog
 
 public:
     explicit EnterProgramName(QWidget *parent = 0);
+    QString ReturnEnteredProgramName();
     ~EnterProgramName();
+
+private slots:
+    void on_buttonBox_accepted();
 
 private:
     Ui::EnterProgramName *ui;
+signals:
+
 };
 
 #endif // ENTERPROGRAMNAME_H

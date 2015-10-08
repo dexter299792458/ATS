@@ -227,6 +227,12 @@
        <height>201</height>
       </rect>
      </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+     <property name="textInteractionFlags">
+      <set>Qt::NoTextInteraction</set>
+     </property>
     </widget>
     <widget class="QPushButton" name="ClearScreenConsole">
      <property name="geometry">
@@ -252,6 +258,16 @@
      </property>
      <property name="text">
       <string>&gt;</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="ConsoleLine">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>230</y>
+       <width>571</width>
+       <height>20</height>
+      </rect>
      </property>
     </widget>
    </widget>

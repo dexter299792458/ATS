@@ -3,6 +3,9 @@
 #define STARTUP 0
 #define CONNECT 1
 #define DISCONNECT 0
+#define RUN 10
+#define LOAD 20
+#define READ 30
 #include "serialportmanager.h"
 #include "console.h"
 #include "programeditor.h"
@@ -24,7 +27,7 @@ public:
 
 public slots:
     void SerialReceived(QByteArray& s);
-    void ProgramNameReceived(QString& programName);
+    void ProgramNameReceived();
 
 private slots:
     void on_Connect_clicked();
@@ -46,7 +49,10 @@ private slots:
     void on_ClearScreenConsole_clicked();
 
     void on_ScanPorts_activated(const QString &arg1); 
+
     void on_SendConsole_clicked();
+
+    void on_ConsoleLine_returnPressed();
 
 private:
     Ui::UserInterface *ui;
@@ -55,6 +61,8 @@ private:
     ProgramEditor m_ProgramEditor;
     void GreyOutMenuItems(int);
     EnterProgramName *enterprogramname;
+    QString programName;
+    int useProgramNameForAction;
 };
 
 #endif // USERINTERFACE_H

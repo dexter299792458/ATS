@@ -13,7 +13,12 @@ UserInterface::UserInterface(QWidget *parent) :
     ui(new Ui::UserInterface)
 {
     ui->setupUi(this);
+
+    enterprogramname = new EnterProgramName();
+    connect(enterprogramname, SIGNAL(accepted()), this, SLOT(ProgramNameReceived()));
+
     GreyOutMenuItems(STARTUP);
+
     //Lezen van beschikbare COM porten en wegschrijven in drop-down box.
     QList<QSerialPortInfo> com_ports = QSerialPortInfo::availablePorts();
     QSerialPortInfo port;
@@ -63,18 +68,40 @@ void UserInterface::on_Disconnect_clicked()
 
 void UserInterface::on_LoadProgram_clicked()
 {
-
+    enterprogramname->show();
+    useProgramNameForAction = LOAD;
 }
 
 void UserInterface::on_RunProgram_clicked()
-{
-    enterprogramname = new EnterProgramName(this);
+{   
     enterprogramname->show();
+    useProgramNameForAction = RUN;
 }
 
 void UserInterface::on_ReadProgram_clicked()
 {
+    enterprogramname->show();
+    useProgramNameForAction = READ;
+}
 
+void UserInterface::ProgramNameReceived()
+{
+    programName = enterprogramname->ReturnEnteredProgramName();
+    ui->ProgramEditorBox->appendPlainText("SELECTED PROGRAM: " + programName);
+    switch (useProgramNameForAction)
+    {
+        case LOAD:
+            m_ProgramEditor.LoadProgramIntoController(programName);
+            break;
+        case RUN:
+            m_ProgramEditor.RunProgram(programName);
+            break;
+        case READ:
+            m_ProgramEditor.DisplayProgramFromMemory(programName);
+            break;
+        default:
+            break;
+    }
 }
 
 //Clear de program editor.
@@ -133,11 +160,11 @@ void UserInterface::on_ScanPorts_activated(const QString &arg1)
 //Versturen van het commando dat ingetypt is in de console.
 void UserInterface::on_SendConsole_clicked()
 {
-    QString allText = ui->ConsoleBox->toPlainText();
-    QStringList splitAllText = allText.split("\n");
-    QString GetLastLine = splitAllText.last();   
-    m_Console.ConvertConsoleLineToSingleACLCommand(GetLastLine);
-    ui->ConsoleBox->clear();
+    //QString allText = ui->ConsoleBox->toPlainText();
+    //QStringList splitAllText = allText.split("\n");
+    //QString GetLastLine = splitAllText.last();
+   // m_Console.ConvertConsoleLineToSingleACLCommand(GetLastLine);
+    //ui->ConsoleBox->clear();
 }
 
 //Wegschrijven van de ontvangen data van de seriele connectie in de Console of Program Editor
@@ -152,7 +179,7 @@ void UserInterface::GreyOutMenuItems(int greyOutChoice)
 {
     switch ( greyOutChoice )
           {
-             case 0:
+             case STARTUP || DISCONNECT:
                 ui->LoadProgram->setEnabled(false);
                 ui->RunProgram->setEnabled(false);
                 ui->ReadProgram->setEnabled(false);
@@ -162,7 +189,7 @@ void UserInterface::GreyOutMenuItems(int greyOutChoice)
                 ui->Connect->setEnabled(true);
                 ui->ScanPorts->setEnabled(true);
                 break;
-             case 1:
+             case CONNECT:
                 ui->LoadProgram->setEnabled(true);
                 ui->RunProgram->setEnabled(true);
                 ui->ReadProgram->setEnabled(true);
@@ -175,4 +202,10 @@ void UserInterface::GreyOutMenuItems(int greyOutChoice)
              default:
                 true;
           }
+}
+
+void UserInterface::on_ConsoleLine_returnPressed()
+{
+    m_Console.ConvertConsoleLineToSingleACLCommand(ui->ConsoleLine->text());
+    ui->ConsoleLine->clear();
 }
