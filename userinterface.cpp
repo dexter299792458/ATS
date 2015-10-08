@@ -90,15 +90,15 @@ void UserInterface::ProgramNameReceived()
     switch (useProgramNameForAction)
     {
         case LOAD:
-             ui->ProgramEditorBox->appendPlainText("LOADING PROGRAM: " + programName);
+             ui->ProgramEditorBox->appendPlainText("LOADING PROGRAM: " + programName + "\n");
             m_ProgramEditor.LoadProgramIntoController(programName);
             break;
         case RUN:
-             ui->ProgramEditorBox->appendPlainText("RUNNING PROGRAM: " + programName);
+             ui->ProgramEditorBox->appendPlainText("RUNNING PROGRAM: " + programName + "\n");
             m_ProgramEditor.RunProgram(programName);
             break;
         case READ:
-            ui->ProgramEditorBox->appendPlainText("READING PROGRAM: " + programName);
+            ui->ProgramEditorBox->appendPlainText("READING PROGRAM: " + programName + "\n");
             m_ProgramEditor.DisplayProgramFromMemory(programName);
             break;
         default:
@@ -162,10 +162,19 @@ void UserInterface::on_ScanPorts_activated(const QString &arg1)
 
 
 //Wegschrijven van de ontvangen data van de seriele connectie in de Console of Program Editor
-void UserInterface::SerialReceived(QByteArray& s)
+void UserInterface::SerialReceived(QByteArray& s, bool& consoleOrProgramEditor)
 {        
-    ui->ConsoleBox->insertPlainText(s);
-    ui->ConsoleBox->verticalScrollBar()->setValue(ui->ConsoleBox->verticalScrollBar()->maximum());
+    if(consoleOrProgramEditor == true)
+    {
+        ui->ConsoleBox->insertPlainText(s);
+        ui->ConsoleBox->verticalScrollBar()->setValue(ui->ConsoleBox->verticalScrollBar()->maximum());
+    }
+    else
+    {
+        ui->ProgramEditorBox->insertPlainText(s);
+        ui->ProgramEditorBox->verticalScrollBar()->setValue(ui->ProgramEditorBox->verticalScrollBar()->maximum());
+    }
+
 }
 
 //Menu items worden onbruikbaar gemaakt voor een bepaalde status van het programma.

@@ -26,7 +26,7 @@ public:
     ~UserInterface();
 
 public slots:
-    void SerialReceived(QByteArray& s);
+    void SerialReceived(QByteArray& s, bool &consoleOrProgramEditor);
     void ProgramNameReceived();
 
 private slots:

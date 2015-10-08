@@ -17,6 +17,7 @@ SerialPortManager* SerialPortManager::instance = 0;
 SerialPortManager::SerialPortManager()
 {
     serialport = new QSerialPort();
+    DataToConsoleOrProgramEditor = false;
 }
 
 //Singleton implementatie
@@ -57,8 +58,11 @@ void SerialPortManager::WriteMultipleACLCommands()
 
 }
 
-void SerialPortManager::WriteSingleACLCommand(QString ACLCommand)
+void SerialPortManager::WriteSingleACLCommand(QString ACLCommand, bool RequestFromConsoleOrProgramEditor)
 {
+    //****!!! IF DataToConsoleOrProgramEditor == TRUE -> Write to Console ****!!!!
+
+    DataToConsoleOrProgramEditor = RequestFromConsoleOrProgramEditor;
     serialport->write(ACLCommand.toLatin1());
 }
 
@@ -74,7 +78,7 @@ void SerialPortManager::GiveReceivedDataToUI()
        // b = serialport->waitForReadyRead();
         s.append(serialport->readAll());
    // }
-    emit Send(s);
+    emit Send(s, DataToConsoleOrProgramEditor);
     //QByteArray ss = "\n";
     //emit Send(ss);
 }

@@ -9,20 +9,21 @@ class SerialPortManager : public QObject
 private:    
     static SerialPortManager* instance;
     QSerialPort *serialport;
+    bool DataToConsoleOrProgramEditor;
 protected:
     SerialPortManager();
 public:
     static SerialPortManager* GetInstance();
     void OpenSerialConnection();
     void CloseSerialConnection();
-    void WriteSingleACLCommand(QString);
+    void WriteSingleACLCommand(QString, bool);
     void WriteMultipleACLCommands();
     void InitializeSerialConnection(QString);
 
 public slots:
     void GiveReceivedDataToUI();
 signals:
-    void Send(QByteArray& s);
+    void Send(QByteArray& s, bool& consoleOrProgramEditor);
 
 };
 #endif // SERIALPORTMANAGER_H

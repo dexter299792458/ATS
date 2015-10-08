@@ -16,6 +16,6 @@ int main(int argc, char *argv[])
     //Door middel van SIGNALS en SLOTS kunnnen deze klassen toch op een nette manier data versturen
     //naar de UserInterface klasse.
     SerialPortManager *singleton_SerialPortManager = SerialPortManager::GetInstance();
-    QWidget::connect(singleton_SerialPortManager, SIGNAL(Send(QByteArray&)),&w, SLOT(SerialReceived(QByteArray&)));      
+    QWidget::connect(singleton_SerialPortManager, SIGNAL(Send(QByteArray&, bool&)),&w, SLOT(SerialReceived(QByteArray&, bool&)));
     return a.exec();
 }
