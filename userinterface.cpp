@@ -87,16 +87,18 @@ void UserInterface::on_ReadProgram_clicked()
 void UserInterface::ProgramNameReceived()
 {
     programName = enterprogramname->ReturnEnteredProgramName();
-    ui->ProgramEditorBox->appendPlainText("SELECTED PROGRAM: " + programName);
     switch (useProgramNameForAction)
     {
         case LOAD:
+             ui->ProgramEditorBox->appendPlainText("LOADING PROGRAM: " + programName);
             m_ProgramEditor.LoadProgramIntoController(programName);
             break;
         case RUN:
+             ui->ProgramEditorBox->appendPlainText("RUNNING PROGRAM: " + programName);
             m_ProgramEditor.RunProgram(programName);
             break;
         case READ:
+            ui->ProgramEditorBox->appendPlainText("READING PROGRAM: " + programName);
             m_ProgramEditor.DisplayProgramFromMemory(programName);
             break;
         default:
