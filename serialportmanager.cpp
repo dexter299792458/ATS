@@ -38,7 +38,7 @@ void SerialPortManager::InitializeSerialConnection(QString connectToPort)
     serialport->setDataBits(QSerialPort::Data8);
     serialport->setParity(QSerialPort::NoParity);
     serialport->setStopBits(QSerialPort::OneStop);
-    serialport->setFlowControl(QSerialPort::NoFlowControl);
+    serialport->setFlowControl(QSerialPort::HardwareControl);
 }
 
 //Open de seriele connectie en connect
@@ -55,12 +55,27 @@ void SerialPortManager::CloseSerialConnection()
 
 void SerialPortManager::WriteMultipleACLCommands(QStringList receivedACLCommands)
 {
-    //QString enter = "\x00D";
+    //QString enter = "PRLNCOM COM1 edit homo @coff @con exit";
+    QString receive = "receive\x20homo\x00D";
+    QByteArray ss = receive.toLatin1();
+    serialport->write(ss);
+    serialport->waitForReadyRead(5000);
+    QByteArray s;
+    //char *colon = ":";
+    //char *jemoeder = ";";
+    //QByteArray jemoer = serialport->readAll();
     for(int i = 0; i < receivedACLCommands.count(); i++ )
     {
-        QByteArray s = receivedACLCommands[i].toLatin1();
+        s = receivedACLCommands[i].toLatin1();
         serialport->write(s);
 
+
+
+        //serialport->waitForReadyRead(500);
+        //while(jemoeder != ":")
+        //{
+        //    serialport->getChar(jemoeder);
+        //}
     }
 }
 
@@ -75,18 +90,13 @@ void SerialPortManager::WriteSingleACLCommand(QString ACLCommand, bool RequestFr
 void SerialPortManager::GiveReceivedDataToUI()
 {
     QByteArray s;
-   // bool b = true;
-
-    //QByteArray loading = "Loading.....";
-    //emit Send(loading);
-   // while(serialport->bytesAvailable() > 0 && b == true )
-    //{
-       // b = serialport->waitForReadyRead();
-        s.append(serialport->readAll());
-   // }
+    s.append(serialport->readAll());
+    qDebug() << s;
+    //qDebug() << serialport->ClearToSendSignal;
     emit Send(s, DataToConsoleOrProgramEditor);
-    //QByteArray ss = "\n";
-    //emit Send(ss);
 }
 
-
+void SerialPortManager::WaitForCommandIsProcessed()
+{
+    serialport->waitForReadyRead(5000);
+}

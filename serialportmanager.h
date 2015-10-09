@@ -19,9 +19,11 @@ public:
     void WriteSingleACLCommand(QString, bool);
     void WriteMultipleACLCommands(QStringList);
     void InitializeSerialConnection(QString);
+    void WaitForCommandIsProcessed();
 
 public slots:
     void GiveReceivedDataToUI();
+
 signals:
     void Send(QByteArray& s, bool& consoleOrProgramEditor);
 

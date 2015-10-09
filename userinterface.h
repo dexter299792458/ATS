@@ -52,6 +52,8 @@ private slots:
 
     void on_ConsoleLine_returnPressed();
 
+    void on_Stop_clicked();
+
 private:
     Ui::UserInterface *ui;
     SerialPortManager *singleton_SerialPortManager;

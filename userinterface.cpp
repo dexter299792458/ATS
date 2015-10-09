@@ -212,3 +212,10 @@ void UserInterface::on_ConsoleLine_returnPressed()
     m_Console.ConvertConsoleLineToSingleACLCommand(ui->ConsoleLine->text());
     ui->ConsoleLine->clear();
 }
+
+void UserInterface::on_Stop_clicked()
+{
+    singleton_SerialPortManager = SerialPortManager::GetInstance();
+    singleton_SerialPortManager->WriteSingleACLCommand("\x03", true);
+    ui->ConsoleLine->clear();
+}

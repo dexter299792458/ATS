@@ -255,9 +255,22 @@
       <rect>
        <x>100</x>
        <y>230</y>
-       <width>601</width>
+       <width>531</width>
        <height>20</height>
       </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="Stop">
+     <property name="geometry">
+      <rect>
+       <x>640</x>
+       <y>230</y>
+       <width>51</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>STOP</string>
      </property>
     </widget>
    </widget>

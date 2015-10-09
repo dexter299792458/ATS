@@ -17,7 +17,9 @@ void ProgramEditor::LoadProgramIntoController(QString loadProgram, QString progr
     for(int i = 0; i < listConversion.count(); i++)
     {
         listConversion[i] = listConversion[i] + "\x00D";
+        qDebug() << listConversion[i];
     }
+    qDebug() << listConversion;
     singleton_SerialPortManager = SerialPortManager::GetInstance();
     singleton_SerialPortManager->WriteMultipleACLCommands(listConversion);
 
