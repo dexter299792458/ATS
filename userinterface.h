@@ -61,7 +61,7 @@ private slots:
 
     void on_ChoiseConsole_clicked();
 
-    void on_pushButton_clicked();
+    void on_EditProgram_clicked();
 
 private:
     Ui::UserInterface *ui;

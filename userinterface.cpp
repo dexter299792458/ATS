@@ -185,6 +185,7 @@ void UserInterface::GreyOutMenuItems(int greyOutChoice)
                 ui->LoadProgram->setEnabled(false);
                 ui->RunProgram->setEnabled(false);
                 ui->ReadProgram->setEnabled(false);
+                ui->EditProgram->setEnabled(false);
                 ui->Disconnect->setEnabled(false);
                 ui->ProgramEditorUIGroup->setEnabled(false);
                 ui->ConsoleUIGroup->setEnabled(false);
@@ -197,6 +198,7 @@ void UserInterface::GreyOutMenuItems(int greyOutChoice)
                 ui->LoadProgram->setEnabled(true);
                 ui->RunProgram->setEnabled(true);
                 ui->ReadProgram->setEnabled(true);
+                ui->EditProgram->setEnabled(true);
                 ui->Disconnect->setEnabled(true);
                 ui->Connect->setEnabled(false);
                 ui->ScanPorts->setEnabled(false);
@@ -211,6 +213,7 @@ void UserInterface::GreyOutMenuItems(int greyOutChoice)
                 ui->LoadProgram->setEnabled(true);
                 ui->RunProgram->setEnabled(true);
                 ui->ReadProgram->setEnabled(true);
+                ui->EditProgram->setEnabled(true);
                 break;
             case CHOISE_IS_CONSOLE:
                 ui->ProgramEditorUIGroup->setEnabled(false);
@@ -218,6 +221,7 @@ void UserInterface::GreyOutMenuItems(int greyOutChoice)
                 ui->LoadProgram->setEnabled(false);
                 ui->RunProgram->setEnabled(false);
                 ui->ReadProgram->setEnabled(false);
+                ui->EditProgram->setEnabled(false);
              default:
                 true;
           }
@@ -248,7 +252,9 @@ void UserInterface::on_ChoiseConsole_clicked()
     ui->ChoiseProgramEditor->clearMask();
 }
 
-void UserInterface::on_pushButton_clicked()
+
+
+void UserInterface::on_EditProgram_clicked()
 {
     QStringList print;
     QStringList final;
@@ -271,11 +277,10 @@ void UserInterface::on_pushButton_clicked()
         }
     }
     qDebug() << final;
-     ui->ProgramEditorBox->insertPlainText("\n");
+     ui->ProgramEditorBox->insertPlainText("\n");\
     for(QString s : final)
     {
 
         ui->ProgramEditorBox->insertPlainText(s + "\n");
     }
-
 }
