@@ -48,6 +48,8 @@ void UserInterface::on_Connect_clicked()
         singleton_SerialPortManager->InitializeSerialConnection(ui->ScanPorts->currentText());
         singleton_SerialPortManager->OpenSerialConnection();
         GreyOutMenuItems(CONNECT);
+        GreyOutMenuItems(CHOISE_IS_CONSOLE);
+        ui->ChoiseConsole->animateClick(0);
     }
 }
 
@@ -90,15 +92,12 @@ void UserInterface::ProgramNameReceived()
     switch (useProgramNameForAction)
     {
         case LOAD:
-            m_ProgramEditor.LoadProgramIntoController(programName, ui->ProgramEditorBox->toPlainText());
-            //ui->ProgramEditorBox->appendPlainText("LOADING PROGRAM: " + programName + "\n");
+            m_ProgramEditor.LoadProgramIntoController(programName, ui->ProgramEditorBox->toPlainText());          
             break;
-        case RUN:
-             ui->ProgramEditorBox->appendPlainText("RUNNING PROGRAM: " + programName + "\n");
+        case RUN:        
             m_ProgramEditor.RunProgram(programName);
             break;
         case READ:
-            ui->ProgramEditorBox->appendPlainText("READING PROGRAM: " + programName + "\n");
             m_ProgramEditor.DisplayProgramFromMemory(programName);
             break;
         default:
@@ -191,6 +190,8 @@ void UserInterface::GreyOutMenuItems(int greyOutChoice)
                 ui->ConsoleUIGroup->setEnabled(false);
                 ui->Connect->setEnabled(true);
                 ui->ScanPorts->setEnabled(true);
+                ui->ChoiseConsole->setEnabled(false);
+                ui->ChoiseProgramEditor->setEnabled(false);
                 break;
              case CONNECT:
                 ui->LoadProgram->setEnabled(true);
@@ -201,7 +202,22 @@ void UserInterface::GreyOutMenuItems(int greyOutChoice)
                 ui->ScanPorts->setEnabled(false);
                 ui->ProgramEditorUIGroup->setEnabled(true);
                 ui->ConsoleUIGroup->setEnabled(true);
+                ui->ChoiseConsole->setEnabled(true);
+                ui->ChoiseProgramEditor->setEnabled(true);
                 break;
+            case CHOISE_IS_PROGRAMEDITOR:
+                ui->ConsoleUIGroup->setEnabled(false);
+                ui->ProgramEditorUIGroup->setEnabled(true);
+                ui->LoadProgram->setEnabled(true);
+                ui->RunProgram->setEnabled(true);
+                ui->ReadProgram->setEnabled(true);
+                break;
+            case CHOISE_IS_CONSOLE:
+                ui->ProgramEditorUIGroup->setEnabled(false);
+                ui->ConsoleUIGroup->setEnabled(true);
+                ui->LoadProgram->setEnabled(false);
+                ui->RunProgram->setEnabled(false);
+                ui->ReadProgram->setEnabled(false);
              default:
                 true;
           }
@@ -218,4 +234,48 @@ void UserInterface::on_Stop_clicked()
     singleton_SerialPortManager = SerialPortManager::GetInstance();
     singleton_SerialPortManager->WriteSingleACLCommand("\x03", true);
     ui->ConsoleLine->clear();
+}
+
+void UserInterface::on_ChoiseProgramEditor_clicked()
+{
+    GreyOutMenuItems(CHOISE_IS_PROGRAMEDITOR);
+    ui->ChoiseConsole->clearMask();
+}
+
+void UserInterface::on_ChoiseConsole_clicked()
+{
+    GreyOutMenuItems(CHOISE_IS_CONSOLE);
+    ui->ChoiseProgramEditor->clearMask();
+}
+
+void UserInterface::on_pushButton_clicked()
+{
+    QStringList print;
+    QStringList final;
+    bool isNumeric;
+    QString testje = ui->ProgramEditorBox->toPlainText();
+    QStringList testlist = testje.split("\n");
+    qDebug() << testlist;
+    for(QString strings : testlist)
+    {
+        print.append(strings.split(":"));
+        //print = strings.split(":");
+    }
+    for(int i = 0; i < print.count(); i++)
+    {
+
+        print[i].toDouble(&isNumeric);
+        if(isNumeric == true)
+        {
+                final.append(print[i+1]);
+        }
+    }
+    qDebug() << final;
+     ui->ProgramEditorBox->insertPlainText("\n");
+    for(QString s : final)
+    {
+
+        ui->ProgramEditorBox->insertPlainText(s + "\n");
+    }
+
 }

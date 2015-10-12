@@ -3,9 +3,12 @@
 #define STARTUP 0
 #define CONNECT 1
 #define DISCONNECT 0
+#define CHOISE_IS_PROGRAMEDITOR 2
+#define CHOISE_IS_CONSOLE 3
 #define RUN 10
 #define LOAD 20
 #define READ 30
+
 #include "serialportmanager.h"
 #include "console.h"
 #include "programeditor.h"
@@ -53,6 +56,12 @@ private slots:
     void on_ConsoleLine_returnPressed();
 
     void on_Stop_clicked();
+
+    void on_ChoiseProgramEditor_clicked();
+
+    void on_ChoiseConsole_clicked();
+
+    void on_pushButton_clicked();
 
 private:
     Ui::UserInterface *ui;
