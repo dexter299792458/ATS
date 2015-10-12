@@ -32,3 +32,9 @@ void ProgramEditor::RunProgram(QString runProgram)
 }
 
 void ProgramEditor::ConvertProgramToSingleACLCommands(){}
+
+void ProgramEditor::DisplayProgramFromMemoryToEdit(QString editProgram)
+{
+    singleton_SerialPortManager = SerialPortManager::GetInstance();
+    singleton_SerialPortManager->WriteSingleACLCommand("list\x20" + editProgram + "\x00D", false);
+}

@@ -8,6 +8,7 @@
 #define RUN 10
 #define LOAD 20
 #define READ 30
+#define EDIT 40
 
 #include "serialportmanager.h"
 #include "console.h"
@@ -69,9 +70,12 @@ private:
     Console m_Console;
     ProgramEditor m_ProgramEditor;
     void GreyOutMenuItems(int);
+    void ConvertProgramToEditable(QByteArray &);
     EnterProgramName *enterprogramname;
     QString programName;
     int useProgramNameForAction;
+    bool MakeProgramFromMemoryEditable;
+
 };
 
 #endif // USERINTERFACE_H

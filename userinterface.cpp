@@ -4,6 +4,8 @@
 #include <QSerialPortInfo>
 #include <QDebug>
 #include <QLineEdit>
+#include <QString>
+#include <QTextCodec>
 #include <QFileDialog>
 #include <QScrollBar>
 #include "enterprogramname.h"
@@ -86,6 +88,12 @@ void UserInterface::on_ReadProgram_clicked()
     useProgramNameForAction = READ;
 }
 
+void UserInterface::on_EditProgram_clicked()
+{
+   enterprogramname->show();
+   useProgramNameForAction = EDIT;
+}
+
 void UserInterface::ProgramNameReceived()
 {
     programName = enterprogramname->ReturnEnteredProgramName();
@@ -99,6 +107,10 @@ void UserInterface::ProgramNameReceived()
             break;
         case READ:
             m_ProgramEditor.DisplayProgramFromMemory(programName);
+            break;
+        case EDIT:
+            MakeProgramFromMemoryEditable = true;
+            m_ProgramEditor.DisplayProgramFromMemoryToEdit(programName);
             break;
         default:
             break;
@@ -168,10 +180,15 @@ void UserInterface::SerialReceived(QByteArray& s, bool& consoleOrProgramEditor)
         ui->ConsoleBox->insertPlainText(s);
         ui->ConsoleBox->verticalScrollBar()->setValue(ui->ConsoleBox->verticalScrollBar()->maximum());
     }
-    else
-    {
+    else if (consoleOrProgramEditor == false && MakeProgramFromMemoryEditable == false)
+    {       
         ui->ProgramEditorBox->insertPlainText(s);
         ui->ProgramEditorBox->verticalScrollBar()->setValue(ui->ProgramEditorBox->verticalScrollBar()->maximum());
+    }
+    else if(consoleOrProgramEditor == false && MakeProgramFromMemoryEditable == true )
+    {
+        //UserInterface::ConvertProgramToEditable(s);
+        ui->ProgramEditorBox->insertPlainText(s);
     }
 
 }
@@ -252,35 +269,31 @@ void UserInterface::on_ChoiseConsole_clicked()
     ui->ChoiseProgramEditor->clearMask();
 }
 
-
-
-void UserInterface::on_EditProgram_clicked()
+void UserInterface::ConvertProgramToEditable(QByteArray& programFromMemory)
 {
-    QStringList print;
-    QStringList final;
-    bool isNumeric;
-    QString testje = ui->ProgramEditorBox->toPlainText();
-    QStringList testlist = testje.split("\n");
-    qDebug() << testlist;
-    for(QString strings : testlist)
-    {
-        print.append(strings.split(":"));
-        //print = strings.split(":");
-    }
-    for(int i = 0; i < print.count(); i++)
-    {
-
-        print[i].toDouble(&isNumeric);
-        if(isNumeric == true)
+        QStringList print;
+        QStringList final;
+        bool isNumeric;
+        QString testje = ui->ProgramEditorBox->toPlainText();
+        QStringList testlist = testje.split("\n");
+        for(QString strings : testlist)
         {
-                final.append(print[i+1]);
+            print.append(strings.split(":"));
+            //print = strings.split(":");
         }
-    }
-    qDebug() << final;
-     ui->ProgramEditorBox->insertPlainText("\n");\
-    for(QString s : final)
-    {
+        for(int i = 0; i < print.count(); i++)
+        {
 
-        ui->ProgramEditorBox->insertPlainText(s + "\n");
-    }
+            print[i].toDouble(&isNumeric);
+            if(isNumeric == true)
+            {
+                    final.append(print[i+1]);
+            }
+        }
+         ui->ProgramEditorBox->insertPlainText("\n");\
+        for(QString s : final)
+        {
+
+            ui->ProgramEditorBox->insertPlainText(s + "\n");
+        }
 }

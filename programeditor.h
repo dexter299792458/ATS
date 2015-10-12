@@ -11,6 +11,7 @@ public:
     void LoadProgramIntoController(QString, QString);
     void RunProgram(QString);
     void DisplayProgramFromMemory(QString);
+    void DisplayProgramFromMemoryToEdit(QString);
 
 private:
     SerialPortManager *singleton_SerialPortManager;
