@@ -75,6 +75,7 @@ private:
     ProgramEditor m_ProgramEditor;
     void GreyOutMenuItems(int);
     void ConvertProgramToEditable();
+    void ScanCOMPorts();
     EnterProgramName *enterprogramname;
     QString programName;
     int useProgramNameForAction;

@@ -15,21 +15,10 @@ UserInterface::UserInterface(QWidget *parent) :
     ui(new Ui::UserInterface)
 {
     ui->setupUi(this);
-
     enterprogramname = new EnterProgramName();
     connect(enterprogramname, SIGNAL(accepted()), this, SLOT(ProgramNameReceived()));
-
     GreyOutMenuItems(STARTUP);
-
-    //Lezen van beschikbare COM porten en wegschrijven in drop-down box.
-    QList<QSerialPortInfo> com_ports = QSerialPortInfo::availablePorts();
-    QSerialPortInfo port;
-    ui->ScanPorts->clear();
-    foreach(port, com_ports)
-    {
-        ui->ScanPorts->addItem(port.portName());
-    }
-    ui->ScanPorts->addItem("Scan ports...");
+    UserInterface::ScanCOMPorts();
 }
 
 UserInterface::~UserInterface()
@@ -158,14 +147,7 @@ void UserInterface::on_ScanPorts_activated(const QString &arg1)
 {
     if(arg1 == "Scan ports...")
     {
-         QList<QSerialPortInfo> com_ports = QSerialPortInfo::availablePorts();
-         QSerialPortInfo port;
-         ui->ScanPorts->clear();
-         foreach(port, com_ports)
-         {
-             ui->ScanPorts->addItem(port.portName());
-         }
-         ui->ScanPorts->addItem("Scan ports...");
+         UserInterface::ScanCOMPorts();
     }
 }
 
@@ -182,8 +164,6 @@ void UserInterface::SerialReceived(QByteArray& s, bool& consoleOrProgramEditor)
         ui->ProgramEditorBox->insertPlainText(s);
         ui->ProgramEditorBox->verticalScrollBar()->setValue(ui->ProgramEditorBox->verticalScrollBar()->maximum());
     }
-
-
 }
 
 //Menu items worden onbruikbaar gemaakt voor een bepaalde status van het programma.
@@ -317,4 +297,16 @@ void UserInterface::on_QuitProgram_clicked()
         singleton_SerialPortManager = SerialPortManager::GetInstance();
         singleton_SerialPortManager->WriteSingleACLCommand("Q\x00D", false);
     }
+}
+
+void UserInterface::ScanCOMPorts()
+{
+    QList<QSerialPortInfo> com_ports = QSerialPortInfo::availablePorts();
+    QSerialPortInfo port;
+    ui->ScanPorts->clear();
+    foreach(port, com_ports)
+    {
+        ui->ScanPorts->addItem(port.portName());
+    }
+    ui->ScanPorts->addItem("Scan ports...");
 }
