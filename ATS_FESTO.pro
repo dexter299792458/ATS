@@ -17,13 +17,16 @@ SOURCES += main.cpp\
     programeditor.cpp \
     serialportmanager.cpp \
     console.cpp \
-    enterprogramname.cpp
+    enterprogramname.cpp \
+    createcoordinates.cpp
 
 HEADERS  += userinterface.h \
     programeditor.h \
     serialportmanager.h \
     console.h \
-    enterprogramname.h
+    enterprogramname.h \
+    createcoordinates.h
 
 FORMS    += userinterface.ui \
-    enterprogramname.ui
+    enterprogramname.ui \
+    createcoordinates.ui

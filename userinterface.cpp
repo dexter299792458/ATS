@@ -8,7 +8,6 @@
 #include <QTextCodec>
 #include <QFileDialog>
 #include <QScrollBar>
-#include "enterprogramname.h"
 
 UserInterface::UserInterface(QWidget *parent) :
     QMainWindow(parent),
@@ -16,6 +15,8 @@ UserInterface::UserInterface(QWidget *parent) :
 {
     ui->setupUi(this);
     enterprogramname = new EnterProgramName();
+    m_CreateCoordinates = new CreateCoordinates();
+
     connect(enterprogramname, SIGNAL(accepted()), this, SLOT(ProgramNameReceived()));
     GreyOutMenuItems(STARTUP);
     UserInterface::ScanCOMPorts();
@@ -309,4 +310,9 @@ void UserInterface::ScanCOMPorts()
         ui->ScanPorts->addItem(port.portName());
     }
     ui->ScanPorts->addItem("Scan ports...");
+}
+
+void UserInterface::on_CreateCoordinates_clicked()
+{
+    m_CreateCoordinates->show();
 }

@@ -208,7 +208,7 @@
     <widget class="QPushButton" name="ClearScreenProgramEditor">
      <property name="geometry">
       <rect>
-       <x>11</x>
+       <x>12</x>
        <y>281</y>
        <width>75</width>
        <height>23</height>
@@ -247,7 +247,7 @@
     <widget class="QPushButton" name="ExpandProgram">
      <property name="geometry">
       <rect>
-       <x>92</x>
+       <x>93</x>
        <y>281</y>
        <width>75</width>
        <height>23</height>
@@ -260,7 +260,7 @@
     <widget class="QPushButton" name="QuitProgram">
      <property name="geometry">
       <rect>
-       <x>173</x>
+       <x>174</x>
        <y>281</y>
        <width>75</width>
        <height>23</height>
@@ -268,6 +268,19 @@
      </property>
      <property name="text">
       <string>SEND &lt;Q&gt;</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="CreateCoordinates">
+     <property name="geometry">
+      <rect>
+       <x>255</x>
+       <y>281</y>
+       <width>100</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Create coördinates</string>
      </property>
     </widget>
    </widget>

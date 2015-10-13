@@ -18,6 +18,7 @@
 #include <QMainWindow>
 #include <QListWidget>
 #include "enterprogramname.h"
+#include "createcoordinates.h"
 
 namespace Ui {
 class UserInterface;
@@ -70,6 +71,8 @@ private slots:
 
     void on_QuitProgram_clicked();
 
+    void on_CreateCoordinates_clicked();
+
 private:
     Ui::UserInterface *ui;
     SerialPortManager *singleton_SerialPortManager;
@@ -86,6 +89,7 @@ private:
     bool isNumeric;
     QString readAllTextToConvert;
     QStringList splitAllTextBySpaces;
+    CreateCoordinates *m_CreateCoordinates;
 
 };
 
