@@ -18,6 +18,7 @@ UserInterface::UserInterface(QWidget *parent) :
     m_CreateCoordinates = new CreateCoordinates();
 
     connect(enterprogramname, SIGNAL(accepted()), this, SLOT(ProgramNameReceived()));
+    connect(m_CreateCoordinates, SIGNAL(accepted()), this, SLOT(CreateCoordinate()));
     GreyOutMenuItems(STARTUP);
     UserInterface::ScanCOMPorts();
 }
@@ -315,4 +316,11 @@ void UserInterface::ScanCOMPorts()
 void UserInterface::on_CreateCoordinates_clicked()
 {
     m_CreateCoordinates->show();
+
 }
+
+void UserInterface::CreateCoordinate()
+{
+    //roep de functie in createcoordinates aan, en krijg de waarden als return.
+}
+

@@ -29,7 +29,7 @@
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="X">
    <property name="geometry">
     <rect>
      <x>40</x>
@@ -39,7 +39,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_2">
+  <widget class="QLineEdit" name="Y">
    <property name="geometry">
     <rect>
      <x>40</x>
@@ -49,7 +49,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_3">
+  <widget class="QLineEdit" name="P">
    <property name="geometry">
     <rect>
      <x>40</x>
@@ -59,7 +59,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_4">
+  <widget class="QLineEdit" name="Z">
    <property name="geometry">
     <rect>
      <x>40</x>
@@ -69,7 +69,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_5">
+  <widget class="QLineEdit" name="R">
    <property name="geometry">
     <rect>
      <x>40</x>
@@ -79,7 +79,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_6">
+  <widget class="QLineEdit" name="PosName">
    <property name="geometry">
     <rect>
      <x>110</x>

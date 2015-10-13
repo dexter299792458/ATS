@@ -12,3 +12,13 @@ CreateCoordinates::~CreateCoordinates()
 {
     delete ui;
 }
+
+void CreateCoordinates::on_buttonBox_accepted()
+{
+
+}
+
+void CreateCoordinates::ReturnCoordinatesToUI()
+{
+
+}
