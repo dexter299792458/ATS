@@ -46,14 +46,6 @@ void SerialPortManager::OpenSerialConnection()
 {
     serialport->open(QIODevice::ReadWrite);
     QSerialPort::connect(serialport,SIGNAL(readyRead()),this,SLOT(GiveReceivedDataToUI()));
-//    qDebug() << serialport->error();
-//    qDebug() << serialport->RequestToSendSignal;
-//    qDebug() << serialport->pinoutSignals();
-//    serialport->write("list\x00D");
-//    serialport->waitForReadyRead(500);
-//    qDebug() << serialport->pinoutSignals();
-//    qDebug() << serialport->isRequestToSend();
-//    qDebug() << serialport->isDataTerminalReady();
 }
 
 void SerialPortManager::CloseSerialConnection()
@@ -99,8 +91,6 @@ void SerialPortManager::GiveReceivedDataToUI()
 {
     QByteArray s;
     s.append(serialport->readAll());
-    qDebug() << s;
-    //qDebug() << serialport->ClearToSendSignal;
     emit Send(s, DataToConsoleOrProgramEditor);
 }
 
