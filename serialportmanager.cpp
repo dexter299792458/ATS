@@ -56,10 +56,10 @@ void SerialPortManager::CloseSerialConnection()
 void SerialPortManager::WriteMultipleACLCommands(QStringList receivedACLCommands)
 {
     //QString enter = "PRLNCOM COM1 edit homo @coff @con exit";
-    QString receive = "receive\x20homo\x00D";
-    QByteArray ss = receive.toLatin1();
-    serialport->write(ss);
-    serialport->waitForReadyRead(5000);
+    //QString receive = "receive\x20homo\x00D";
+    //QByteArray ss = receive.toLatin1();
+    //serialport->write(ss);
+    //serialport->waitForReadyRead(5000);
     QByteArray s;
     //char *colon = ":";
     //char *jemoeder = ";";
@@ -68,10 +68,7 @@ void SerialPortManager::WriteMultipleACLCommands(QStringList receivedACLCommands
     {
         s = receivedACLCommands[i].toLatin1();
         serialport->write(s);
-
-
-
-        //serialport->waitForReadyRead(500);
+        serialport->waitForReadyRead(500);
         //while(jemoeder != ":")
         //{
         //    serialport->getChar(jemoeder);
