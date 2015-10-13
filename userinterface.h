@@ -64,17 +64,25 @@ private slots:
 
     void on_EditProgram_clicked();
 
+    void on_ExpandProgram_clicked();
+
+    void on_QuitProgram_clicked();
+
 private:
     Ui::UserInterface *ui;
     SerialPortManager *singleton_SerialPortManager;
     Console m_Console;
     ProgramEditor m_ProgramEditor;
     void GreyOutMenuItems(int);
-    void ConvertProgramToEditable(QByteArray &);
+    void ConvertProgramToEditable();
     EnterProgramName *enterprogramname;
     QString programName;
     int useProgramNameForAction;
-    bool MakeProgramFromMemoryEditable;
+    QStringList splitAllTextByColon;
+    QStringList onlyPrintACLCommands;
+    bool isNumeric;
+    QString readAllTextToConvert;
+    QStringList splitAllTextBySpaces;
 
 };
 

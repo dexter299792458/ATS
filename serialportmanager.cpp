@@ -38,7 +38,7 @@ void SerialPortManager::InitializeSerialConnection(QString connectToPort)
     serialport->setDataBits(QSerialPort::Data8);
     serialport->setParity(QSerialPort::NoParity);
     serialport->setStopBits(QSerialPort::OneStop);
-    serialport->setFlowControl(QSerialPort::HardwareControl);
+    serialport->setFlowControl(QSerialPort::HardwareControl);    
 }
 
 //Open de seriele connectie en connect
@@ -46,6 +46,14 @@ void SerialPortManager::OpenSerialConnection()
 {
     serialport->open(QIODevice::ReadWrite);
     QSerialPort::connect(serialport,SIGNAL(readyRead()),this,SLOT(GiveReceivedDataToUI()));
+//    qDebug() << serialport->error();
+//    qDebug() << serialport->RequestToSendSignal;
+//    qDebug() << serialport->pinoutSignals();
+//    serialport->write("list\x00D");
+//    serialport->waitForReadyRead(500);
+//    qDebug() << serialport->pinoutSignals();
+//    qDebug() << serialport->isRequestToSend();
+//    qDebug() << serialport->isDataTerminalReady();
 }
 
 void SerialPortManager::CloseSerialConnection()

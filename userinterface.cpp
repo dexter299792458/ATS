@@ -78,20 +78,20 @@ void UserInterface::on_LoadProgram_clicked()
 
 void UserInterface::on_RunProgram_clicked()
 {   
-    enterprogramname->show();
+    enterprogramname->show();   
     useProgramNameForAction = RUN;
 }
 
 void UserInterface::on_ReadProgram_clicked()
 {
-    enterprogramname->show();
+    enterprogramname->show();  
     useProgramNameForAction = READ;
 }
 
 void UserInterface::on_EditProgram_clicked()
-{
-   enterprogramname->show();
-   useProgramNameForAction = EDIT;
+{   
+    useProgramNameForAction = EDIT;
+    ProgramNameReceived();
 }
 
 void UserInterface::ProgramNameReceived()
@@ -108,9 +108,8 @@ void UserInterface::ProgramNameReceived()
         case READ:
             m_ProgramEditor.DisplayProgramFromMemory(programName);
             break;
-        case EDIT:
-            MakeProgramFromMemoryEditable = true;
-            m_ProgramEditor.DisplayProgramFromMemoryToEdit(programName);
+        case EDIT:             
+            UserInterface::ConvertProgramToEditable();
             break;
         default:
             break;
@@ -170,26 +169,20 @@ void UserInterface::on_ScanPorts_activated(const QString &arg1)
     }
 }
 
-
-
 //Wegschrijven van de ontvangen data van de seriele connectie in de Console of Program Editor
 void UserInterface::SerialReceived(QByteArray& s, bool& consoleOrProgramEditor)
 {        
     if(consoleOrProgramEditor == true)
-    {
+    {      
         ui->ConsoleBox->insertPlainText(s);
         ui->ConsoleBox->verticalScrollBar()->setValue(ui->ConsoleBox->verticalScrollBar()->maximum());
     }
-    else if (consoleOrProgramEditor == false && MakeProgramFromMemoryEditable == false)
+    else
     {       
         ui->ProgramEditorBox->insertPlainText(s);
         ui->ProgramEditorBox->verticalScrollBar()->setValue(ui->ProgramEditorBox->verticalScrollBar()->maximum());
     }
-    else if(consoleOrProgramEditor == false && MakeProgramFromMemoryEditable == true )
-    {
-        //UserInterface::ConvertProgramToEditable(s);
-        ui->ProgramEditorBox->insertPlainText(s);
-    }
+
 
 }
 
@@ -269,31 +262,59 @@ void UserInterface::on_ChoiseConsole_clicked()
     ui->ChoiseProgramEditor->clearMask();
 }
 
-void UserInterface::ConvertProgramToEditable(QByteArray& programFromMemory)
-{
-        QStringList print;
-        QStringList final;
-        bool isNumeric;
-        QString testje = ui->ProgramEditorBox->toPlainText();
-        QStringList testlist = testje.split("\n");
-        for(QString strings : testlist)
-        {
-            print.append(strings.split(":"));
-            //print = strings.split(":");
-        }
-        for(int i = 0; i < print.count(); i++)
-        {
+//**!!!! Geldt alleen wanneer er eerst een programma is gelezen met de Read Program knop **!!!!//
+void UserInterface::ConvertProgramToEditable()
+{             
+        //lees alle teskt uit de ProgramEditor in
+        readAllTextToConvert = ui->ProgramEditorBox->toPlainText();
+        ui->ProgramEditorBox->clear();
 
-            print[i].toDouble(&isNumeric);
-            if(isNumeric == true)
+        //Split de tekst op een enter en plaats dit in een nieuwe lijst.
+        splitAllTextBySpaces = readAllTextToConvert.split("\n");
+
+        //Voor alle regels in de lijst, split deze bij een ":"
+        for(QString allStringsIn : splitAllTextBySpaces)
+        {
+            splitAllTextByColon.append(allStringsIn.split(":"));
+        }
+            //zoek door de hele lijst naar nummers, wanneer nummer gevonden
+            //is de volgende cell in de lijst het ACL commando.
+            //Voeg het gevonden commando toe aan een nieuwe lijst.
+            for(int i = 0; i < splitAllTextByColon.count(); i++)
             {
-                    final.append(print[i+1]);
+                splitAllTextByColon[i].toDouble(&isNumeric);
+                if(isNumeric == true)
+                {
+                    onlyPrintACLCommands.append(splitAllTextByColon[i+1]);
+                }
             }
-        }
-         ui->ProgramEditorBox->insertPlainText("\n");\
-        for(QString s : final)
-        {
+                //print de nieuwe lijst in de console.
+                for(QString allStringsIn : onlyPrintACLCommands)
+                {
+                  ui->ProgramEditorBox->insertPlainText(allStringsIn + "\n");
+                }
+           splitAllTextByColon.clear();
+           onlyPrintACLCommands.clear();
+}
 
-            ui->ProgramEditorBox->insertPlainText(s + "\n");
-        }
+void UserInterface::on_ExpandProgram_clicked()
+{
+    QString findCROrQuitCommando = ui->ProgramEditorBox->toPlainText();
+    bool checkIfCommandoIsPresence = findCROrQuitCommando.contains("Type <cr> for more");
+    if (checkIfCommandoIsPresence == true)
+    {
+        singleton_SerialPortManager = SerialPortManager::GetInstance();
+        singleton_SerialPortManager->WriteSingleACLCommand("cr\x00D", false);
+    }
+}
+
+void UserInterface::on_QuitProgram_clicked()
+{
+    QString findCROrQuitCommando = ui->ProgramEditorBox->toPlainText();
+    bool checkIfCommandoIsPresence = findCROrQuitCommando.contains("Type <cr> for more");
+    if (checkIfCommandoIsPresence == true)
+    {
+        singleton_SerialPortManager = SerialPortManager::GetInstance();
+        singleton_SerialPortManager->WriteSingleACLCommand("Q\x00D", false);
+    }
 }

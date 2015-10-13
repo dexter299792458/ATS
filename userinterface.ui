@@ -208,9 +208,9 @@
     <widget class="QPushButton" name="ClearScreenProgramEditor">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>280</y>
-       <width>72</width>
+       <x>11</x>
+       <y>281</y>
+       <width>75</width>
        <height>23</height>
       </rect>
      </property>
@@ -221,9 +221,9 @@
     <widget class="QPushButton" name="OpenProgram">
      <property name="geometry">
       <rect>
-       <x>630</x>
-       <y>280</y>
-       <width>71</width>
+       <x>620</x>
+       <y>281</y>
+       <width>75</width>
        <height>23</height>
       </rect>
      </property>
@@ -234,14 +234,40 @@
     <widget class="QPushButton" name="SaveProgram">
      <property name="geometry">
       <rect>
-       <x>553</x>
-       <y>280</y>
-       <width>72</width>
+       <x>539</x>
+       <y>281</y>
+       <width>75</width>
        <height>23</height>
       </rect>
      </property>
      <property name="text">
       <string>Save</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="ExpandProgram">
+     <property name="geometry">
+      <rect>
+       <x>92</x>
+       <y>281</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>SEND &lt;CR&gt;</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="QuitProgram">
+     <property name="geometry">
+      <rect>
+       <x>173</x>
+       <y>281</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>SEND &lt;Q&gt;</string>
      </property>
     </widget>
    </widget>
