@@ -13,5 +13,5 @@ void Console::ConvertConsoleLineToSingleACLCommand(QString ACLCommand)
 void Console::SendSingleACLCommandToController(QString ACLCommand)
 {
     singleton_SerialPortManager = SerialPortManager::GetInstance();
-    singleton_SerialPortManager->WriteSingleACLCommand(ACLCommand, true);
+    singleton_SerialPortManager->WriteSingleACLCommand(ACLCommand, WRITE_TO_CONSOLE);
 }

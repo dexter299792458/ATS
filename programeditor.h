@@ -1,5 +1,8 @@
 #ifndef PROGRAMEDITOR_H
 #define PROGRAMEDITOR_H
+#define WRITE_TO_CONSOLE true
+#define WRITE_TO_PROGRAMEDITOR false
+
 #include "serialportmanager.h"
 
 

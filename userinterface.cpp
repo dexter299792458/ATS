@@ -226,7 +226,7 @@ void UserInterface::on_ConsoleLine_returnPressed()
 void UserInterface::on_Stop_clicked()
 {
     singleton_SerialPortManager = SerialPortManager::GetInstance();
-    singleton_SerialPortManager->WriteSingleACLCommand("\x03", true);
+    singleton_SerialPortManager->WriteSingleACLCommand("\x03", WRITE_TO_CONSOLE);
     ui->ConsoleLine->clear();
 }
 
@@ -284,7 +284,7 @@ void UserInterface::on_ExpandProgram_clicked()
     if (checkIfCommandoIsPresence == true)
     {
         singleton_SerialPortManager = SerialPortManager::GetInstance();
-        singleton_SerialPortManager->WriteSingleACLCommand("cr\x00D", false);
+        singleton_SerialPortManager->WriteSingleACLCommand("cr\x00D", WRITE_TO_PROGRAMEDITOR);
     }
 }
 
@@ -295,7 +295,7 @@ void UserInterface::on_QuitProgram_clicked()
     if (checkIfCommandoIsPresence == true)
     {
         singleton_SerialPortManager = SerialPortManager::GetInstance();
-        singleton_SerialPortManager->WriteSingleACLCommand("Q\x00D", false);
+        singleton_SerialPortManager->WriteSingleACLCommand("Q\x00D", WRITE_TO_PROGRAMEDITOR);
     }
 }
 

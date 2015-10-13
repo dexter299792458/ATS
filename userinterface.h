@@ -9,6 +9,8 @@
 #define LOAD 20
 #define READ 30
 #define EDIT 40
+#define WRITE_TO_CONSOLE true
+#define WRITE_TO_PROGRAMEDITOR false
 
 #include "serialportmanager.h"
 #include "console.h"
