@@ -35,7 +35,6 @@ public:
 public slots:
     void SerialReceived(QByteArray& s, bool &consoleOrProgramEditor);
     void ProgramNameReceived();
-    void CreateCoordinate();
 
 private slots:
     void on_Connect_clicked();

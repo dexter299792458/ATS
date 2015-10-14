@@ -16,9 +16,7 @@ UserInterface::UserInterface(QWidget *parent) :
     ui->setupUi(this);
     enterprogramname = new EnterProgramName();
     m_CreateCoordinates = new CreateCoordinates();
-
     connect(enterprogramname, SIGNAL(accepted()), this, SLOT(ProgramNameReceived()));
-    connect(m_CreateCoordinates, SIGNAL(accepted()), this, SLOT(CreateCoordinate()));
     GreyOutMenuItems(STARTUP);
     UserInterface::ScanCOMPorts();
 }
@@ -156,7 +154,7 @@ void UserInterface::on_ScanPorts_activated(const QString &arg1)
 //Wegschrijven van de ontvangen data van de seriele connectie in de Console of Program Editor
 void UserInterface::SerialReceived(QByteArray& s, bool& consoleOrProgramEditor)
 {        
-    if(consoleOrProgramEditor == true)
+    if(consoleOrProgramEditor == WRITE_TO_CONSOLE)
     {      
         ui->ConsoleBox->insertPlainText(s);
         ui->ConsoleBox->verticalScrollBar()->setValue(ui->ConsoleBox->verticalScrollBar()->maximum());
@@ -316,11 +314,6 @@ void UserInterface::ScanCOMPorts()
 void UserInterface::on_CreateCoordinates_clicked()
 {
     m_CreateCoordinates->show();
-
 }
 
-void UserInterface::CreateCoordinate()
-{
-    //roep de functie in createcoordinates aan, en krijg de waarden als return.
-}
 

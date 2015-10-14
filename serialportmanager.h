@@ -17,7 +17,7 @@ public:
     void OpenSerialConnection();
     void CloseSerialConnection();
     void WriteSingleACLCommand(QString, bool);
-    void WriteMultipleACLCommands(QStringList);
+    void WriteMultipleACLCommands(QStringList, bool);
     void InitializeSerialConnection(QString);
     void WaitForCommandIsProcessed();
 

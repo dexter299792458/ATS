@@ -20,7 +20,7 @@ void ProgramEditor::LoadProgramIntoController(QString loadProgram, QString progr
         listConversion[i] = listConversion[i] + "\x00D";       
     }  
     singleton_SerialPortManager = SerialPortManager::GetInstance();
-    singleton_SerialPortManager->WriteMultipleACLCommands(listConversion);
+    singleton_SerialPortManager->WriteMultipleACLCommands(listConversion, WRITE_TO_PROGRAMEDITOR);
 
 }
 

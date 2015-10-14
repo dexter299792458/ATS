@@ -53,8 +53,9 @@ void SerialPortManager::CloseSerialConnection()
     serialport->close();
 }
 
-void SerialPortManager::WriteMultipleACLCommands(QStringList receivedACLCommands)
+void SerialPortManager::WriteMultipleACLCommands(QStringList receivedACLCommands, bool RequestFromConsoleOrProgramEditor)
 {
+    DataToConsoleOrProgramEditor = RequestFromConsoleOrProgramEditor;
     //QString enter = "PRLNCOM COM1 edit homo @coff @con exit";
     //QString receive = "receive\x20homo\x00D";
     //QByteArray ss = receive.toLatin1();
