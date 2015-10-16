@@ -11,7 +11,7 @@ class ProgramEditor
 public:
     ProgramEditor();
     void ConvertProgramToSingleACLCommands();
-    void LoadProgramIntoController(QString, QString);
+    void LoadProgramIntoController(QString);
     void RunProgram(QString);
     void DisplayProgramFromMemory(QString);
     void DisplayProgramFromMemoryToEdit(QString);

@@ -19,7 +19,6 @@ public:
     void WriteSingleACLCommand(QString, bool);
     void WriteMultipleACLCommands(QStringList, bool);
     void InitializeSerialConnection(QString);
-    void WaitForCommandIsProcessed();
 
 public slots:
     void GiveReceivedDataToUI();

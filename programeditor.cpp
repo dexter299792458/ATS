@@ -12,7 +12,7 @@ void ProgramEditor::DisplayProgramFromMemory(QString showProgam)
             ("list\x20" + showProgam + "\x00D", WRITE_TO_PROGRAMEDITOR);
 }
 
-void ProgramEditor::LoadProgramIntoController(QString loadProgram, QString programData)
+void ProgramEditor::LoadProgramIntoController(QString programData)
 {
     listConversion = programData.split("\n");
     for(int i = 0; i < listConversion.count(); i++)
@@ -31,7 +31,10 @@ void ProgramEditor::RunProgram(QString runProgram)
             ("run\x20" + runProgram + "\x00D", WRITE_TO_PROGRAMEDITOR);
 }
 
-void ProgramEditor::ConvertProgramToSingleACLCommands(){}
+void ProgramEditor::ConvertProgramToSingleACLCommands()
+{
+
+}
 
 void ProgramEditor::DisplayProgramFromMemoryToEdit(QString editProgram)
 {

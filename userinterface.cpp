@@ -5,9 +5,13 @@
 #include <QDebug>
 #include <QLineEdit>
 #include <QString>
+#include <QStringList>
+#include <QByteArray>
 #include <QTextCodec>
 #include <QFileDialog>
 #include <QScrollBar>
+#include <ios>
+#include <stdio.h>
 
 UserInterface::UserInterface(QWidget *parent) :
     QMainWindow(parent),
@@ -89,7 +93,7 @@ void UserInterface::ProgramNameReceived()
     switch (useProgramNameForAction)
     {
         case LOAD:
-            m_ProgramEditor.LoadProgramIntoController(programName, ui->ProgramEditorBox->toPlainText());          
+            m_ProgramEditor.LoadProgramIntoController(ui->ProgramEditorBox->toPlainText());
             break;
         case RUN:        
             m_ProgramEditor.RunProgram(programName);
@@ -113,6 +117,25 @@ void UserInterface::on_ClearScreenProgramEditor_clicked()
 
 void UserInterface::on_SaveProgram_clicked()
 {
+    QString saveProgramText = ui->ProgramEditorBox->toPlainText();
+    QStringList listOfCommands = saveProgramText.split("\n");
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Open File"),
+        "",tr("Files *.txt"));
+    QFile outputFile(fileName + ".txt");
+    {
+        if(outputFile.open(QIODevice::ReadWrite))
+        {
+            QTextStream out(&outputFile);
+
+            //Loop door de lijst van commando's heen en schrijft deze naar
+            //de .txt file. De "\r\n" is nodig om een nieuwe regel toe te voegen
+            //in de txt file, een "\n" of endl; werkt niet!!!
+            for(int i = 0; i < listOfCommands.count(); i++)
+            {
+               out << listOfCommands[i] << "\r\n";
+           }
+        }
+    }
 
 }
 

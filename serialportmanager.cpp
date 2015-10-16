@@ -92,7 +92,4 @@ void SerialPortManager::GiveReceivedDataToUI()
     emit Send(s, DataToConsoleOrProgramEditor);
 }
 
-void SerialPortManager::WaitForCommandIsProcessed()
-{
-    serialport->waitForReadyRead(5000);
-}
+
