@@ -1,0 +1,22 @@
+!define NAAM "ATS_FESTO"
+
+# define the name of the installer
+Outfile "ATS_FESTO_TEST.exe"
+ 
+# define the directory to install to, the desktop in this case as specified  
+# by the predefined $DESKTOP variable
+InstallDir $PROGRAMFILES\dion
+ 
+# default section
+Section
+ 
+# define the output path for this file
+SetOutPath $INSTDIR
+ 
+# define what to install and place it in the output path
+File /r "C:\Users\Administrator2\Desktop\ATS_FESTO\*"
+
+ 
+CreateShortCut "$DESKTOP\${NAAM}.lnk" "$INSTDIR\${NAAM}.exe" "" "$INSTDIR\festo.ico" 0
+ 
+SectionEnd

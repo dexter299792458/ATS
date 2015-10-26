@@ -31,6 +31,10 @@
   <property name="windowTitle">
    <string>Scorbot ATS</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../../Desktop/ATS_FESTO/festo.ico</normaloff>../../Desktop/ATS_FESTO/festo.ico</iconset>
+  </property>
   <property name="documentMode">
    <bool>false</bool>
   </property>
