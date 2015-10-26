@@ -6,7 +6,6 @@ CreateCoordinates::CreateCoordinates(QWidget *parent) :
     ui(new Ui::CreateCoordinates)
 {
     ui->setupUi(this);
-    ui->Loading->setVisible(false);
 }
 
 CreateCoordinates::~CreateCoordinates()
@@ -14,9 +13,16 @@ CreateCoordinates::~CreateCoordinates()
     delete ui;
 }
 
+//** implementeert een apart GUI scherm voor het aanmaken van een coordinaat d.m.v meerdere ACL's. **//
+
+
+//Wanneer de gebruiker in het pop-up scherm voor het aanmaken van coordinaten op 'OK' drukt:
+//De ingevulde data wordt in een QStringList geplaatst en alle enkele QString's krijgen
+//een hexadecimale `enter` achter hun huidige data geplakt voor het verzenden.
+//Vervolgens handelt de methode SendCoordinatedToController()  het verzenden van een QStringList
+//naar de SerialPortManager af.
 void CreateCoordinates::on_buttonBox_accepted()
 {
-    ui->Loading->setVisible(true);
     coordinate.append("defp\x20" + ui->PosName->text() + "\x00D");
     coordinate.append("teach\x20" + ui->PosName->text() + "\x00D" );
     coordinate.append(ui->X->text() + "\x00D");
@@ -27,9 +33,11 @@ void CreateCoordinates::on_buttonBox_accepted()
     CreateCoordinates::SendCoordinatesToController(coordinate);
 }
 
+//Verzenden van de QStringList met daarin de ACL Commando's die nodig zijn voor het aanmaken
+//van een coordinaat. Verzoek komt vanaf de ProgramEditor (WRITE_TO_PROGRAMEDITOR)
 void CreateCoordinates::SendCoordinatesToController(QStringList sendCoordinate)
 {
     singleton_SerialPortManager = SerialPortManager::GetInstance();
-    singleton_SerialPortManager->WriteMultipleACLCommands(sendCoordinate, WRITE_TO_CONSOLE);
+    singleton_SerialPortManager->WriteMultipleACLCommands(sendCoordinate, WRITE_TO_PROGRAMEDITOR);
     coordinate.clear();
 }

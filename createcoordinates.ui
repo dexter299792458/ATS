@@ -170,19 +170,6 @@
     <string>Postion name:</string>
    </property>
   </widget>
-  <widget class="QLabel" name="Loading">
-   <property name="geometry">
-    <rect>
-     <x>120</x>
-     <y>140</y>
-     <width>121</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>LOADING... please wait</string>
-   </property>
-  </widget>
  </widget>
  <resources/>
  <connections>

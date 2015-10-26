@@ -10,15 +10,15 @@ class ProgramEditor
 {
 public:
     ProgramEditor();
-    void ConvertProgramToSingleACLCommands();
+
     void LoadProgramIntoController(QString);
     void RunProgram(QString);
     void DisplayProgramFromMemory(QString);
-    void DisplayProgramFromMemoryToEdit(QString);
 
 private:
     SerialPortManager *singleton_SerialPortManager;
     QStringList listConversion;
+    void ConvertProgramToSingleACLCommands(QString);
 };
 
 #endif // PROGRAMEDITOR_H

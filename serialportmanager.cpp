@@ -10,17 +10,19 @@
 #include <QDebug>
 #include "userinterface.h"
 
-//Class members
+//** Set de instance_flag van de singleton op 0! **//
 SerialPortManager* SerialPortManager::instance = 0;
 
-//Singleton constructor zorgt voor de RS232 initialisatie
+//**Singleton constructor zorgt voor het eenmalig aanmaken van een QSerialPort! **//
 SerialPortManager::SerialPortManager()
 {
     serialport = new QSerialPort();
     DataToConsoleOrProgramEditor = false;
 }
 
-//Singleton implementatie
+//Singleton implementatie -> Nog geen instantie van SerialPortManager is nieuw object aanmaken.
+//Wanneer er op de eerste aanvraag van GetInstance() een instantie gemaakt is, krijgen alle
+//volgende aanvragen diezelfde instantie terug.
 SerialPortManager* SerialPortManager::GetInstance()
 {
     if(instance == 0)
@@ -31,6 +33,7 @@ SerialPortManager* SerialPortManager::GetInstance()
 }
 
 //Initialisatie van de seriele connectie
+//Methode krijgt de gekozen COM poort uit het dropdown menu van de UserInterface mee in een QString.
 void SerialPortManager::InitializeSerialConnection(QString connectToPort)
 {
     serialport->setPortName(connectToPort);
@@ -38,53 +41,62 @@ void SerialPortManager::InitializeSerialConnection(QString connectToPort)
     serialport->setDataBits(QSerialPort::Data8);
     serialport->setParity(QSerialPort::NoParity);
     serialport->setStopBits(QSerialPort::OneStop);
-    serialport->setFlowControl(QSerialPort::HardwareControl);    
+    serialport->setFlowControl(QSerialPort::SoftwareControl);
 }
 
-//Open de seriele connectie en connect
+//Opent de seriele connectie.
+//Het connect commando verbindt het readyRead() signaal aan een zelf gedefinieerd SLOT.
+//readyRead() signaal wordt true (emit) wanneer er nieuwe data aanwezig is op de verbinding.
+//data komt binnen op het gedefinieerde SLOT.
+//** LET OP: readyRead() signaal emit meerdere keren!! bijvoorbeeld bij het commando `list` **//
+//** Er is geen eind aan de datastroom te onderscheiden!! **//
 void SerialPortManager::OpenSerialConnection()
 {
     serialport->open(QIODevice::ReadWrite);
     QSerialPort::connect(serialport,SIGNAL(readyRead()),this,SLOT(GiveReceivedDataToUI()));
 }
 
+//Sluiten van de seriele connectie.
 void SerialPortManager::CloseSerialConnection()
 {
     serialport->close();
 }
 
+//Methode verstuurt meerdere ACL commando's achter elkaar.
+//waitForReadyRead(500) is nodig om de controller de tijd te geven om de commando's te verwerken
+//voordat het volgende commando verstuurd kan worden.
+//** De bool DataToConsoleOrProgramEditor slaat op vanaf waar er een ACL verstuurd is. **//
+//** Dit kan zijn vanaf de Console of vanaf de ProgramEditor                           **//
+//** Wanneer er vanaf de Console een ACL verstuurd wordt, wil je dat de onvangen data  **//
+//** ook in het Console veld geprint wordt. Zelfde geldt voor de ProgramEditor.        **//
 void SerialPortManager::WriteMultipleACLCommands(QStringList receivedACLCommands, bool RequestFromConsoleOrProgramEditor)
 {
+    //Bool DataToConsoleOrProgramEditor wordt bijgewerkt aan de hand van het verzoek!
     DataToConsoleOrProgramEditor = RequestFromConsoleOrProgramEditor;
-    //QString enter = "PRLNCOM COM1 edit homo @coff @con exit";
-    //QString receive = "receive\x20homo\x00D";
-    //QByteArray ss = receive.toLatin1();
-    //serialport->write(ss);
-    //serialport->waitForReadyRead(5000);
     QByteArray s;
-    //char *colon = ":";
-    //char *jemoeder = ";";
-    //QByteArray jemoer = serialport->readAll();
     for(int i = 0; i < receivedACLCommands.count(); i++ )
     {
         s = receivedACLCommands[i].toLatin1();
         serialport->write(s);
         serialport->waitForReadyRead(500);
-        //while(jemoeder != ":")
-        //{
-        //    serialport->getChar(jemoeder);
-        //}
     }
 }
 
+//Het ontvangen (enkele) ACL commando wordt verzonden over de seriele connectie.
+//De conversie toLatin1() is nodig om het juiste dataformaat te krijgen wat over de seriele verbinding mag
 void SerialPortManager::WriteSingleACLCommand(QString ACLCommand, bool RequestFromConsoleOrProgramEditor)
 {
-    //****!!! IF DataToConsoleOrProgramEditor == TRUE -> Write to Console ****!!!!
-
+    //Bool DataToConsoleOrProgramEditor wordt bijgewerkt aan de hand van het verzoek!
     DataToConsoleOrProgramEditor = RequestFromConsoleOrProgramEditor;
     serialport->write(ACLCommand.toLatin1());
 }
 
+//public SLOT --> zie connect in OpenSerialConnection in SerialPortManager.
+//Als er nieuwe data op de verbinding staat die ingelezen kan worden wordt deze methode aangeroepen.
+//Vervolgens is er zelf een SIGNAL gedefinieerd namelijk Send();
+//Dit signaal wordt gebruikt om de ontvangen data terug te sturen naar de UserInterface en deze data
+//vervolgens in de Console of ProgramEditor te printen (bool DataToConsoleOrProgramEditor)
+//De connect tussen de SerialPortManager en UserInterface is terug te vinden in main.cpp
 void SerialPortManager::GiveReceivedDataToUI()
 {
     QByteArray s;
