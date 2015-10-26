@@ -130,6 +130,8 @@ void UserInterface::ProgramNameReceived()
             m_ProgramEditor.RunProgram(programName);
             break;
         case READ:
+            //Clear screen voordat er een nieuw programma gelezen wordt.
+            ui->ProgramEditorBox->clear();
             //De methode DisplayProgramFromMemory krijgt de opgegeven programmanaam mee.
             m_ProgramEditor.DisplayProgramFromMemory(programName);
             break;
