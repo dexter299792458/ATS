@@ -79,6 +79,8 @@ void UserInterface::on_Disconnect_clicked()
 //BUTTON-CLICK Load Program
 void UserInterface::on_LoadProgram_clicked()
 {
+    //Naam in titelbalk van pop-up scherm aanpassen
+    enterprogramname->setWindowTitle("Load Program");
     //Pop-up scherm voor programmanaam openen
     enterprogramname->show();
     //Integer useProgramNameForAction houdt bij op welke knop er is gedrukt (LOAD, RUN, READ of EDIT)
@@ -88,6 +90,8 @@ void UserInterface::on_LoadProgram_clicked()
 //BUTTON-CLICK Run Program
 void UserInterface::on_RunProgram_clicked()
 {   
+    //Naam in titelbalk van pop-up scherm aanpassen
+    enterprogramname->setWindowTitle("Run Program");
     //Pop-up scherm voor programmanaam openen
     enterprogramname->show();
    //Integer useProgramNameForAction houdt bij op welke knop er is gedrukt (LOAD, RUN, READ of EDIT)
@@ -97,6 +101,8 @@ void UserInterface::on_RunProgram_clicked()
 //BUTTON-CLICK Read Program
 void UserInterface::on_ReadProgram_clicked()
 {
+    //Naam in titelbalk van pop-up scherm aanpassen
+    enterprogramname->setWindowTitle("Read Program");
     //Pop-up scherm voor programmanaam openen
     enterprogramname->show();
     //Integer useProgramNameForAction houdt bij op welke knop er is gedrukt (LOAD, RUN, READ of EDIT)
