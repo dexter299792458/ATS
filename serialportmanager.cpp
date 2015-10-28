@@ -57,12 +57,8 @@ bool SerialPortManager::OpenSerialConnection()
     QSerialPort::connect(serialport,SIGNAL(readyRead()),this,SLOT(GiveReceivedDataToUI()));
 
     //Check for DSR serial signal (Data Set Ready)
-    //Als !DRS dan geldt dat het de verkeerde COM port is.
-    checkForDataSetReady = serialport->pinoutSignals();
-    checkForDataSetReady = DATA_SET_READY & checkForDataSetReady;
-
     //DSR signaal = TRUE juiste COM port gekozen
-    if(checkForDataSetReady != DATA_SET_READY)
+    if(DATA_SET_READY != (DATA_SET_READY & serialport->pinoutSignals()))
     {
         QMessageBox msgBox;
         msgBox.setText("The SCOTBOT controller is not connected to this COM port!");
