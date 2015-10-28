@@ -10,9 +10,10 @@ class Console
 public:
     Console();
     void ConvertConsoleLineToSingleACLCommand(QString);
-    void SendSingleACLCommandToController(QString);
+
 private:
     SerialPortManager *singleton_SerialPortManager;
+    void SendSingleACLCommandToController(QString);
 };
 
 #endif // CONSOLE_H
