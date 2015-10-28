@@ -90,6 +90,7 @@ private:
     QString readAllTextToConvert;
     QStringList splitAllTextBySpaces;
     CreateCoordinates *m_CreateCoordinates;
+    bool erronOnOpen;
 
 };
 

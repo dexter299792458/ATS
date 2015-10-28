@@ -30,6 +30,7 @@ UserInterface::UserInterface(QWidget *parent) :
 
     //Methode voor het scannen van de COM porten die aanwezig
     UserInterface::ScanCOMPorts();
+    erronOnOpen = true;
 }
 
 UserInterface::~UserInterface()
@@ -42,19 +43,28 @@ void UserInterface::on_Connect_clicked()
 {
     if (ui->ScanPorts->currentText() != "Scan ports...")
     {
-        //Laat de gebruiker zien dat de verbinding tot stand is gekomen
-        ui->ConnectionStatus->setText("Connected to: " + ui->ScanPorts->currentText());
-        ui->ConnectionStatus->setStyleSheet("QLineEdit{background: lightgreen;}");
-
         //Maak verbinding met de seriele poort, eerst wordt de verbinding geinitialiseerd en vervolgens geopend.
         singleton_SerialPortManager = SerialPortManager::GetInstance();
         singleton_SerialPortManager->InitializeSerialConnection(ui->ScanPorts->currentText());
-        singleton_SerialPortManager->OpenSerialConnection();
+        erronOnOpen = singleton_SerialPortManager->OpenSerialConnection();
+        if(erronOnOpen == false)
+        {
+            singleton_SerialPortManager->CloseSerialConnection();
+            ui->ConnectionStatus->setText("Wrong COM port!");
+            ui->ConnectionStatus->setStyleSheet("QLineEdit{background: red;}");
+            GreyOutMenuItems(DISCONNECT);
 
-        //Maak bepaalde GUI functionaliteiten weer beschikbaar voor de gebruiker
-        GreyOutMenuItems(CONNECT);
-        GreyOutMenuItems(CHOISE_IS_CONSOLE);
-        ui->ChoiseConsole->animateClick(0);
+        }
+        else
+        {
+            //Laat de gebruiker zien dat de verbinding tot stand is gekomen
+            ui->ConnectionStatus->setText("Connected to: " + ui->ScanPorts->currentText());
+            ui->ConnectionStatus->setStyleSheet("QLineEdit{background: lightgreen;}");
+            //Maak bepaalde GUI functionaliteiten weer beschikbaar voor de gebruiker
+            GreyOutMenuItems(CONNECT);
+            GreyOutMenuItems(CHOISE_IS_CONSOLE);
+            ui->ChoiseConsole->animateClick(0);
+        }
     }
 }
 
@@ -263,7 +273,7 @@ void UserInterface::GreyOutMenuItems(int greyOutChoice)
                 ui->Connect->setEnabled(true);
                 ui->ScanPorts->setEnabled(true);
                 ui->ChoiseConsole->setEnabled(false);
-                ui->ChoiseProgramEditor->setEnabled(false);
+                ui->ChoiseProgramEditor->setEnabled(false);            
                 break;
              case CONNECT:
                 ui->LoadProgram->setEnabled(true);

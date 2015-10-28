@@ -8,6 +8,7 @@
 #include <QSerialPortInfo>
 #include <QString>
 #include <QDebug>
+#include <QMessageBox>
 #include "userinterface.h"
 
 //** Set de instance_flag van de singleton op 0! **//
@@ -50,10 +51,30 @@ void SerialPortManager::InitializeSerialConnection(QString connectToPort)
 //data komt binnen op het gedefinieerde SLOT.
 //** LET OP: readyRead() signaal emit meerdere keren!! bijvoorbeeld bij het commando `list` **//
 //** Er is geen eind aan de datastroom te onderscheiden!! **//
-void SerialPortManager::OpenSerialConnection()
+bool SerialPortManager::OpenSerialConnection()
 {
     serialport->open(QIODevice::ReadWrite);
     QSerialPort::connect(serialport,SIGNAL(readyRead()),this,SLOT(GiveReceivedDataToUI()));
+
+    //Check for DSR serial signal (Data Set Ready)
+    //Als !DRS dan geldt dat het de verkeerde COM port is.
+    checkForDataSetReady = serialport->pinoutSignals();
+    checkForDataSetReady = DATA_SET_READY & checkForDataSetReady;
+
+    //DSR signaal = TRUE juiste COM port gekozen
+    if(checkForDataSetReady != DATA_SET_READY)
+    {
+        QMessageBox msgBox;
+        msgBox.setText("The SCOTBOT controller is not connected to this COM port!");
+        msgBox.exec();
+        return false;
+    }
+
+    //Verkeerde COM port gekozen
+    else
+    {
+        return true;
+    }
 }
 
 //Sluiten van de seriele connectie.

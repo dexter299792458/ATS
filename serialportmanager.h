@@ -2,6 +2,7 @@
 #define SERIALPORTMANAGER_H
 #include <QMainWindow>
 #include <QSerialPort>
+#define DATA_SET_READY 0x10
 
 class SerialPortManager : public QObject
 {
@@ -10,11 +11,12 @@ private:
     static SerialPortManager* instance;
     QSerialPort *serialport;
     bool DataToConsoleOrProgramEditor;
+    int checkForDataSetReady;
 protected:
     SerialPortManager();
 public:
     static SerialPortManager* GetInstance();
-    void OpenSerialConnection();
+    bool OpenSerialConnection();
     void CloseSerialConnection();
     void WriteSingleACLCommand(QString, bool);
     void WriteMultipleACLCommands(QStringList, bool);
