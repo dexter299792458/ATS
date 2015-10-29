@@ -91,6 +91,11 @@ private:
     QStringList splitAllTextBySpaces;
     CreateCoordinates *m_CreateCoordinates;
     bool erronOnOpen;
+    QList<QString> consoleHistory;
+    int consoleHistoryposition;
+
+protected:
+    virtual void keyPressEvent(QKeyEvent *e);
 
 };
 

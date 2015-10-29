@@ -31,6 +31,7 @@ UserInterface::UserInterface(QWidget *parent) :
     //Methode voor het scannen van de COM porten die aanwezig
     UserInterface::ScanCOMPorts();
     erronOnOpen = true;
+    consoleHistoryposition = 0;
 }
 
 UserInterface::~UserInterface()
@@ -308,12 +309,48 @@ void UserInterface::GreyOutMenuItems(int greyOutChoice)
           }
 }
 
+void UserInterface::keyPressEvent(QKeyEvent *e)
+{
+    switch (e->key()) {
+    case Qt::Key_Up:
+        if(ui->ConsoleLine->hasFocus())
+        {
+            if(!consoleHistory.empty())
+            {
+                if(ui->ConsoleLine->text() == consoleHistory[consoleHistoryposition] && consoleHistoryposition < consoleHistory.count()-1)
+                {
+                        consoleHistoryposition++;
+                }
+                ui->ConsoleLine->setText(consoleHistory[consoleHistoryposition]);
+            }
+        }
+            break ;
+    case Qt::Key_Down:
+        if(ui->ConsoleLine->hasFocus())
+        {
+            if(!consoleHistory.empty())
+            {
+                if(ui->ConsoleLine->text() == consoleHistory[consoleHistoryposition] && consoleHistoryposition > 0)
+                {
+                    consoleHistoryposition--;
+                }
+                ui->ConsoleLine->setText(consoleHistory[consoleHistoryposition]);
+            }
+        }
+            break ;
+    default:
+        break ;
+    }
+}
+
 //Wanneer er in de Console op `enter` wordt gedrukt:
 void UserInterface::on_ConsoleLine_returnPressed()
 {
     //Lees de tekst in een verstuur deze naar de Console klasse
     m_Console.ConvertConsoleLineToSingleACLCommand(ui->ConsoleLine->text());
+    consoleHistory.push_front(ui->ConsoleLine->text());
     ui->ConsoleLine->clear();
+    consoleHistoryposition = 0;
 }
 
 //BUTTON-CLICK Stop

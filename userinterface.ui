@@ -33,7 +33,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../../Desktop/ATS_FESTO/festo.ico</normaloff>../../Desktop/ATS_FESTO/festo.ico</iconset>
+    <normaloff>../ATS_FESTO/festo.ico</normaloff>../ATS_FESTO/festo.ico</iconset>
   </property>
   <property name="documentMode">
    <bool>false</bool>
@@ -169,8 +169,14 @@
        <height>17</height>
       </rect>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
+     </property>
      <property name="text">
       <string>Console</string>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
      </property>
     </widget>
     <widget class="QPushButton" name="EditProgram">
