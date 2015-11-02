@@ -30,6 +30,8 @@ UserInterface::UserInterface(QWidget *parent) :
 
     //Methode voor het scannen van de COM porten die aanwezig
     UserInterface::ScanCOMPorts();
+
+    //Initialisatie variabelen
     erronOnOpen = true;
     consoleHistoryposition = 0;
 }
@@ -137,6 +139,7 @@ void UserInterface::ProgramNameReceived()
     //Check of er daadwerkelijk een naam is ingevuld, anders geen actie.
         if(programName.isEmpty())
         {
+            //Check nogmaals omdat Edit program geen programmanaam nodig heeft!
             if(programName.isEmpty() && useProgramNameForAction != EDIT)
             {
                 QMessageBox msgBox;
@@ -216,7 +219,7 @@ void UserInterface::on_SaveProgram_clicked()
             {
                out << listOfCommands[i] << "\r\n";
            }
-        }
+       }
     }
 }
 
@@ -334,7 +337,6 @@ void UserInterface::GreyOutMenuItems(int greyOutChoice)
 //Arrow-up en Arrow-down event voor de Console. Toon de eerder ingevoerde commando's.
 void UserInterface::keyPressEvent(QKeyEvent *e)
 {
-
         switch (e->key()) {
         //Arrow-up
         case Qt::Key_Up:
@@ -367,7 +369,6 @@ void UserInterface::keyPressEvent(QKeyEvent *e)
         default:
             break ;
         }
-
 }
 
 //Wanneer er in de Console op `enter` wordt gedrukt:
