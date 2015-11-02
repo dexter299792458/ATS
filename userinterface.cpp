@@ -205,7 +205,6 @@ void UserInterface::on_SaveProgram_clicked()
            }
         }
     }
-
 }
 
 //BUTTON-CLICK Open
@@ -319,9 +318,11 @@ void UserInterface::GreyOutMenuItems(int greyOutChoice)
           }
 }
 
+//Arrow-up en Arrow-down event voor de Console. Toon de eerder ingevoerde commando's.
 void UserInterface::keyPressEvent(QKeyEvent *e)
 {
-    switch (e->key()) {
+    switch (e->key()) {    
+    //Arrow-up
     case Qt::Key_Up:
         if(ui->ConsoleLine->hasFocus())
         {
@@ -335,6 +336,7 @@ void UserInterface::keyPressEvent(QKeyEvent *e)
             }
         }
             break ;
+    //Arrow-down
     case Qt::Key_Down:
         if(ui->ConsoleLine->hasFocus())
         {
