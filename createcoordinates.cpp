@@ -1,6 +1,7 @@
 #include "createcoordinates.h"
 #include "ui_createcoordinates.h"
 #include <QMessageBox>
+#include <QTimer>
 
 CreateCoordinates::CreateCoordinates(QWidget *parent) :
     QDialog(parent),

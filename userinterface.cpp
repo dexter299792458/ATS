@@ -133,44 +133,57 @@ void UserInterface::ProgramNameReceived()
 {
     //Vraag de programmanaam op d.m.v een return (QString)
     programName = enterprogramname->ReturnEnteredProgramName();
-    //Aan de hand van de waarde van de integer useProgramNameForAction wordt er een actie uitgevoerd:
-    // LOAD, RUN, READ of EDIT
 
-    //Als er geen programmanaam is ingevuld, sla dan de switch over.
-    //Er moet geen actie worden uitgevoerd als er geen programmanaam is ingevuld.
-    if(programName == nullptr)
-    {
-        //Sla de switch over.
-    }
-    else
-    {
-        switch (useProgramNameForAction)
+    //Check of er daadwerkelijk een naam is ingevuld, anders geen actie.
+        if(programName.isEmpty())
         {
-            case LOAD:
-                //Geef aan de methode LoadProgramIntoController het gehele tekstveld van de ProgramEditor mee
-                //In dit tekstveld staam alle losse ACL commando's die samen een programma vormen.
-                m_ProgramEditor.LoadProgramIntoController(ui->ProgramEditorBox->toPlainText());
-                break;
-            case RUN:
-                //De methode RunProgram krijgt de opgegeven programmanaam mee.
-                m_ProgramEditor.RunProgram(programName);
-                break;
-            case READ:
-                //Clear screen voordat er een nieuw programma gelezen wordt.
-                ui->ProgramEditorBox->clear();
-                //De methode DisplayProgramFromMemory krijgt de opgegeven programmanaam mee.
-                m_ProgramEditor.DisplayProgramFromMemory(programName);
-                break;
-            case EDIT:
-                //**EDIT functie werkt alleen wanneer er eerst een READ is uitgevoerd **//
-                //**De methode ConvertProgramToEditable converteert een programma     **//
-                //**uit het geheugen zodat deze aangepast kan worden                  **//
-                UserInterface::ConvertProgramToEditable();
-                break;
-            default:
-                break;
+            if(programName.isEmpty() && useProgramNameForAction != EDIT)
+            {
+                QMessageBox msgBox;
+                msgBox.setText("Please enter a programname.");
+                msgBox.exec();
+            }
         }
-    }
+        else
+        {
+            ui->ConnectionStatus->setStyleSheet("QLineEdit{background: lightblue;}");
+            //Aan de hand van de waarde van de integer useProgramNameForAction wordt er een actie uitgevoerd:
+            // LOAD, RUN, READ of EDIT
+
+            //Als er geen programmanaam is ingevuld, sla dan de switch over.
+            //Er moet geen actie worden uitgevoerd als er geen programmanaam is ingevuld.
+                switch (useProgramNameForAction)
+                {
+                    case LOAD:
+                        //Geef aan de methode LoadProgramIntoController het gehele tekstveld van de ProgramEditor mee
+                        //In dit tekstveld staam alle losse ACL commando's die samen een programma vormen.
+                        ui->ConnectionStatus->setText("Loaded program: " + programName);
+                        m_ProgramEditor.LoadProgramIntoController(ui->ProgramEditorBox->toPlainText());
+                        break;
+                    case RUN:
+                        //De methode RunProgram krijgt de opgegeven programmanaam mee.
+                        ui->ConnectionStatus->setText("Running program: " + programName);
+                        m_ProgramEditor.RunProgram(programName);
+                        break;
+                    case READ:
+                        //Clear screen voordat er een nieuw programma gelezen wordt.
+                        ui->ProgramEditorBox->clear();
+                        //De methode DisplayProgramFromMemory krijgt de opgegeven programmanaam mee.
+                        ui->ConnectionStatus->setText("Read program: " + programName);
+                        m_ProgramEditor.DisplayProgramFromMemory(programName);
+                        break;
+                    case EDIT:
+                        //**EDIT functie werkt alleen wanneer er eerst een READ is uitgevoerd **//
+                        //**De methode ConvertProgramToEditable converteert een programma     **//
+                        //**uit het geheugen zodat deze aangepast kan worden                  **//
+                         ui->ConnectionStatus->setText("Program ready to edit: " + programName);
+                         UserInterface::ConvertProgramToEditable();
+                        break;
+                    default:
+                        break;
+                }
+                programName.clear();
+        }
 }
 
 //BUTTON-CLICK Clear Screen (Program Editor)
@@ -321,38 +334,40 @@ void UserInterface::GreyOutMenuItems(int greyOutChoice)
 //Arrow-up en Arrow-down event voor de Console. Toon de eerder ingevoerde commando's.
 void UserInterface::keyPressEvent(QKeyEvent *e)
 {
-    switch (e->key()) {    
-    //Arrow-up
-    case Qt::Key_Up:
-        if(ui->ConsoleLine->hasFocus())
-        {
-            if(!consoleHistory.empty())
+
+        switch (e->key()) {
+        //Arrow-up
+        case Qt::Key_Up:
+            if(ui->ConsoleLine->hasFocus())
             {
-                if(ui->ConsoleLine->text() == consoleHistory[consoleHistoryposition] && consoleHistoryposition < consoleHistory.count()-1)
+                if(!consoleHistory.empty())
                 {
-                        consoleHistoryposition++;
+                    if(ui->ConsoleLine->text() == consoleHistory[consoleHistoryposition] && consoleHistoryposition < consoleHistory.count()-1)
+                    {
+                            consoleHistoryposition++;
+                    }
+                    ui->ConsoleLine->setText(consoleHistory[consoleHistoryposition]);
                 }
-                ui->ConsoleLine->setText(consoleHistory[consoleHistoryposition]);
             }
-        }
-            break ;
-    //Arrow-down
-    case Qt::Key_Down:
-        if(ui->ConsoleLine->hasFocus())
-        {
-            if(!consoleHistory.empty())
+                break ;
+        //Arrow-down
+        case Qt::Key_Down:
+            if(ui->ConsoleLine->hasFocus())
             {
-                if(ui->ConsoleLine->text() == consoleHistory[consoleHistoryposition] && consoleHistoryposition > 0)
+                if(!consoleHistory.empty())
                 {
-                    consoleHistoryposition--;
+                    if(ui->ConsoleLine->text() == consoleHistory[consoleHistoryposition] && consoleHistoryposition > 0)
+                    {
+                        consoleHistoryposition--;
+                    }
+                    ui->ConsoleLine->setText(consoleHistory[consoleHistoryposition]);
                 }
-                ui->ConsoleLine->setText(consoleHistory[consoleHistoryposition]);
             }
-        }
+                break ;
+        default:
             break ;
-    default:
-        break ;
-    }
+        }
+
 }
 
 //Wanneer er in de Console op `enter` wordt gedrukt:
@@ -360,9 +375,12 @@ void UserInterface::on_ConsoleLine_returnPressed()
 {
     //Lees de tekst in een verstuur deze naar de Console klasse
     m_Console.ConvertConsoleLineToSingleACLCommand(ui->ConsoleLine->text());
-    consoleHistory.push_front(ui->ConsoleLine->text());
+    if(!ui->ConsoleLine->text().isEmpty())
+    {
+        consoleHistory.push_front(ui->ConsoleLine->text());
+        consoleHistoryposition = 0;
+    }
     ui->ConsoleLine->clear();
-    consoleHistoryposition = 0;
 }
 
 //BUTTON-CLICK Stop

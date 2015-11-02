@@ -33,16 +33,5 @@ void EnterProgramName::on_buttonBox_accepted()
 QString EnterProgramName::ReturnEnteredProgramName()
 {
     //Check of er een programmanaam is ingevuld, laat anders opnieuw het scherm zien.
-    if(ui->lineEdit->text().isEmpty())
-    {
-        QMessageBox msgBox;
-        msgBox.setText("Please enter a programname!");
-        msgBox.exec();
-        this->show();
-        return nullptr;
-    }
-    else
-    {
-         return ui->lineEdit->text();
-    }
+    return ui->lineEdit->text();
 }

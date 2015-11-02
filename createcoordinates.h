@@ -5,6 +5,7 @@
 
 #include <QDialog>
 #include "serialportmanager.h"
+#include <QMessageBox>
 
 namespace Ui {
 class CreateCoordinates;
