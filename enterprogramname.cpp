@@ -1,6 +1,7 @@
 #include "enterprogramname.h"
 #include "ui_enterprogramname.h"
 #include <QDebug>
+#include <QMessageBox>
 
 EnterProgramName::EnterProgramName(QWidget *parent) :
     QDialog(parent),
@@ -31,5 +32,17 @@ void EnterProgramName::on_buttonBox_accepted()
 //tussen de UserInterface GUI en de EnterProgramName GUI.
 QString EnterProgramName::ReturnEnteredProgramName()
 {
-    return ui->lineEdit->text();
+    //Check of er een programmanaam is ingevuld, laat anders opnieuw het scherm zien.
+    if(ui->lineEdit->text().isEmpty())
+    {
+        QMessageBox msgBox;
+        msgBox.setText("Please enter a programname!");
+        msgBox.exec();
+        this->show();
+        return nullptr;
+    }
+    else
+    {
+         return ui->lineEdit->text();
+    }
 }

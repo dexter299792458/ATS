@@ -135,31 +135,41 @@ void UserInterface::ProgramNameReceived()
     programName = enterprogramname->ReturnEnteredProgramName();
     //Aan de hand van de waarde van de integer useProgramNameForAction wordt er een actie uitgevoerd:
     // LOAD, RUN, READ of EDIT
-    switch (useProgramNameForAction)
+
+    //Als er geen programmanaam is ingevuld, sla dan de switch over.
+    //Er moet geen actie worden uitgevoerd als er geen programmanaam is ingevuld.
+    if(programName == nullptr)
     {
-        case LOAD:
-            //Geef aan de methode LoadProgramIntoController het gehele tekstveld van de ProgramEditor mee
-            //In dit tekstveld staam alle losse ACL commando's die samen een programma vormen.
-            m_ProgramEditor.LoadProgramIntoController(ui->ProgramEditorBox->toPlainText());
-            break;
-        case RUN:        
-            //De methode RunProgram krijgt de opgegeven programmanaam mee.
-            m_ProgramEditor.RunProgram(programName);
-            break;
-        case READ:
-            //Clear screen voordat er een nieuw programma gelezen wordt.
-            ui->ProgramEditorBox->clear();
-            //De methode DisplayProgramFromMemory krijgt de opgegeven programmanaam mee.
-            m_ProgramEditor.DisplayProgramFromMemory(programName);
-            break;
-        case EDIT:
-            //**EDIT functie werkt alleen wanneer er eerst een READ is uitgevoerd **//
-            //**De methode ConvertProgramToEditable converteert een programma     **//
-            //**uit het geheugen zodat deze aangepast kan worden                  **//
-            UserInterface::ConvertProgramToEditable();
-            break;
-        default:
-            break;
+        //Sla de switch over.
+    }
+    else
+    {
+        switch (useProgramNameForAction)
+        {
+            case LOAD:
+                //Geef aan de methode LoadProgramIntoController het gehele tekstveld van de ProgramEditor mee
+                //In dit tekstveld staam alle losse ACL commando's die samen een programma vormen.
+                m_ProgramEditor.LoadProgramIntoController(ui->ProgramEditorBox->toPlainText());
+                break;
+            case RUN:
+                //De methode RunProgram krijgt de opgegeven programmanaam mee.
+                m_ProgramEditor.RunProgram(programName);
+                break;
+            case READ:
+                //Clear screen voordat er een nieuw programma gelezen wordt.
+                ui->ProgramEditorBox->clear();
+                //De methode DisplayProgramFromMemory krijgt de opgegeven programmanaam mee.
+                m_ProgramEditor.DisplayProgramFromMemory(programName);
+                break;
+            case EDIT:
+                //**EDIT functie werkt alleen wanneer er eerst een READ is uitgevoerd **//
+                //**De methode ConvertProgramToEditable converteert een programma     **//
+                //**uit het geheugen zodat deze aangepast kan worden                  **//
+                UserInterface::ConvertProgramToEditable();
+                break;
+            default:
+                break;
+        }
     }
 }
 
