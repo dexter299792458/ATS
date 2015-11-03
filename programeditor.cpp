@@ -20,9 +20,9 @@ void ProgramEditor::DisplayProgramFromMemory(QString showProgam)
 //zie hiervoor de functie ConvertProgramToSingleACLCommands().
 //Vervolgens zal de methode WriteMultipleACLCommands het versturen van de ACL commando's afhandelen.
 //Let op dat hier een QStringList wordt meegegeven en geen QByteArray!
-void ProgramEditor::LoadProgramIntoController(QString programData)
+void ProgramEditor::LoadProgramIntoController(QString programName, QString programData)
 {
-    ProgramEditor::ConvertProgramToSingleACLCommands(programData);
+    ProgramEditor::ConvertProgramToSingleACLCommands(programName, programData);
     singleton_SerialPortManager = SerialPortManager::GetInstance();
     singleton_SerialPortManager->WriteMultipleACLCommands(listConversion, WRITE_TO_PROGRAMEDITOR);
 }
@@ -41,12 +41,20 @@ void ProgramEditor::RunProgram(QString runProgram)
 //De tekst wordt door middel van het split("\n") commando opgedeeld in enkele QString's.
 //Elke individuele QString krijgt een hexadecimale `enter` achter zijn huidige data geplakt
 //anders worden de commando's niet verzonden.
-void ProgramEditor::ConvertProgramToSingleACLCommands(QString convertedProgramData)
+void ProgramEditor::ConvertProgramToSingleACLCommands(QString rprogramName, QString convertedProgramData)
 {
     listConversion = convertedProgramData.split("\n");
     for(int i = 0; i < listConversion.count(); i++)
     {
         listConversion[i] = listConversion[i] + "\x00D";
     }
+
+    //Geen check om te kijken of er al een programma met die naam bestaat.
+    //Programma wordt verwijderd en vervolgens opnieuw aangemaakt.
+    listConversion.insert(0, "remove\x20" + rprogramName + "\x00D");
+    listConversion.insert(1, "yes\x00D");
+    listConversion.insert(2, "edit\x20" + rprogramName + "\x00D");
+    listConversion.insert(3, "y\x00D");
+    listConversion.insert(listConversion.end(), "exit\x00D");
 }
 

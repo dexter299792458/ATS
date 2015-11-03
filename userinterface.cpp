@@ -161,7 +161,7 @@ void UserInterface::ProgramNameReceived()
                         //Geef aan de methode LoadProgramIntoController het gehele tekstveld van de ProgramEditor mee
                         //In dit tekstveld staam alle losse ACL commando's die samen een programma vormen.
                         ui->ConnectionStatus->setText("Loaded program: " + programName);
-                        m_ProgramEditor.LoadProgramIntoController(ui->ProgramEditorBox->toPlainText());
+                        m_ProgramEditor.LoadProgramIntoController(programName, ui->ProgramEditorBox->toPlainText());
                         break;
                     case RUN:
                         //De methode RunProgram krijgt de opgegeven programmanaam mee.

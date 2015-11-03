@@ -11,14 +11,14 @@ class ProgramEditor
 public:
     ProgramEditor();
 
-    void LoadProgramIntoController(QString);
+    void LoadProgramIntoController(QString, QString);
     void RunProgram(QString);
     void DisplayProgramFromMemory(QString);
 
 private:
     SerialPortManager *singleton_SerialPortManager;
     QStringList listConversion;
-    void ConvertProgramToSingleACLCommands(QString);
+    void ConvertProgramToSingleACLCommands(QString, QString);
 };
 
 #endif // PROGRAMEDITOR_H
