@@ -34,6 +34,7 @@ UserInterface::UserInterface(QWidget *parent) :
     //Initialisatie variabelen
     erronOnOpen = true;
     consoleHistoryposition = 0;
+
 }
 
 UserInterface::~UserInterface()
@@ -135,6 +136,7 @@ void UserInterface::ProgramNameReceived()
 {
     //Vraag de programmanaam op d.m.v een return (QString)
     programName = enterprogramname->ReturnEnteredProgramName();
+    QString plaintext;
 
     //Check of er daadwerkelijk een naam is ingevuld, anders geen actie.
         if(programName.isEmpty())
@@ -161,7 +163,10 @@ void UserInterface::ProgramNameReceived()
                         //Geef aan de methode LoadProgramIntoController het gehele tekstveld van de ProgramEditor mee
                         //In dit tekstveld staam alle losse ACL commando's die samen een programma vormen.
                         ui->ConnectionStatus->setText("Loaded program: " + programName);
-                        m_ProgramEditor.LoadProgramIntoController(programName, ui->ProgramEditorBox->toPlainText());
+                        plaintext = ui->ProgramEditorBox->toPlainText();
+                        ui->ProgramEditorBox->clear();
+                        m_ProgramEditor.LoadProgramIntoController(programName, plaintext);
+
                         break;
                     case RUN:
                         //De methode RunProgram krijgt de opgegeven programmanaam mee.
