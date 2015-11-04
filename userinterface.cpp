@@ -235,8 +235,7 @@ void UserInterface::on_OpenProgram_clicked()
        {
           QTextStream in(&inputFile);
           //Zolang het eind van de .txt file niet bereikt is: lees een regel in en print deze in
-          //het ProgramEditor veld.
-
+          //het ProgramEditor veld. Clear eerst het tekstveld van Program Editor!
           ui->ProgramEditorBox->clear();
           while (!in.atEnd())
           {
