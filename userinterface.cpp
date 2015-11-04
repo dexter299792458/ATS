@@ -143,7 +143,7 @@ void UserInterface::ProgramNameReceived()
             if(programName.isEmpty() && useProgramNameForAction != EDIT)
             {
                 QMessageBox msgBox;
-                msgBox.setText("Please enter a programname.");
+                msgBox.setText("Please enter a programname, try again.");
                 msgBox.exec();
             }
         }
