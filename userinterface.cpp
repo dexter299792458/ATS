@@ -28,7 +28,7 @@ UserInterface::UserInterface(QWidget *parent) :
     //van de status van het systeem. Zie userinface.h voor de verschillende define's (statussen).
     GreyOutMenuItems(STARTUP);
 
-    //Methode voor het scannen van de COM porten die aanwezig
+    //Methode voor het scannen van de COM porten die aanwezig zijn
     UserInterface::ScanCOMPorts();
 
     //Initialisatie variabelen
