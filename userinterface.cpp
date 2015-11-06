@@ -210,8 +210,8 @@ void UserInterface::on_SaveProgram_clicked()
 
     //Opent een file dialog, gebruiker kan een locatie kiezen waar hij/zij het programma wil opslaan
     QString fileName = QFileDialog::getSaveFileName(this, tr("Open File"),
-        "",tr("Files *.txt"));
-    QFile outputFile(fileName + ".txt");
+        "",tr("Files (*.txt)"));
+    QFile outputFile(fileName);
     {
         if(outputFile.open(QIODevice::ReadWrite))
         {
