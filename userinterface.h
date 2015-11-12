@@ -93,6 +93,8 @@ private:
     bool erronOnOpen;
     QList<QString> consoleHistory;
     int consoleHistoryposition;
+    QString backSpace;
+    QList<QString> backSpaceList;
 
 protected:
     virtual void keyPressEvent(QKeyEvent *e);

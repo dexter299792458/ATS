@@ -3,6 +3,7 @@
 #include <QMainWindow>
 #include <QSerialPort>
 #define DATA_SET_READY 0x10
+#define REMOVE_PROGRAM_ACL 1
 
 class SerialPortManager : public QObject
 {

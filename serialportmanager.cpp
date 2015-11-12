@@ -93,9 +93,20 @@ void SerialPortManager::WriteMultipleACLCommands(QStringList receivedACLCommands
     QByteArray s;
     for(int i = 0; i < receivedACLCommands.count(); i++ )
     {
-        s = receivedACLCommands[i].toLatin1();
-        serialport->write(s);
-        serialport->waitForReadyRead(1000);
+        //Wanneer er een groot programma verwijderd moet worden, kost dit veel tijd
+        //vandaar een timer van 20 seconden!
+        if(i == REMOVE_PROGRAM_ACL)
+        {
+            s = receivedACLCommands[i].toLatin1();
+            serialport->write(s);
+            serialport->waitForReadyRead(20000);
+        }
+        else
+        {
+            s = receivedACLCommands[i].toLatin1();
+            serialport->write(s);
+            serialport->waitForReadyRead(1000);
+        }
     }
 }
 

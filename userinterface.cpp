@@ -234,7 +234,6 @@ void UserInterface::on_OpenProgram_clicked()
     //Opent een file dialog, gebruiker selecteert een .txt bestand.
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
         "",tr("Files *.txt"));
-       ui->ProgramEditorBox->clear();
        QFile inputFile(fileName);
        if (inputFile.open(QIODevice::ReadOnly))
        {
@@ -348,6 +347,7 @@ void UserInterface::keyPressEvent(QKeyEvent *e)
         case Qt::Key_Up:
             if(ui->ConsoleLine->hasFocus())
             {
+                qDebug() << "hallo";
                 if(!consoleHistory.empty())
                 {
                     if(ui->ConsoleLine->text() == consoleHistory[consoleHistoryposition] && consoleHistoryposition < consoleHistory.count()-1)
@@ -362,6 +362,7 @@ void UserInterface::keyPressEvent(QKeyEvent *e)
         case Qt::Key_Down:
             if(ui->ConsoleLine->hasFocus())
             {
+                qDebug() << "hallo";
                 if(!consoleHistory.empty())
                 {
                     if(ui->ConsoleLine->text() == consoleHistory[consoleHistoryposition] && consoleHistoryposition > 0)
