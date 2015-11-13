@@ -99,13 +99,13 @@ void SerialPortManager::WriteMultipleACLCommands(QStringList receivedACLCommands
         {
             s = receivedACLCommands[i].toLatin1();
             serialport->write(s);
-            serialport->waitForReadyRead(20000);
-        }
+            serialport->waitForReadyRead(10000);
+        }       
         else
         {
             s = receivedACLCommands[i].toLatin1();
             serialport->write(s);
-            serialport->waitForReadyRead(1000);
+            serialport->waitForReadyRead(500);
         }
     }
 }
