@@ -61,7 +61,7 @@ bool SerialPortManager::OpenSerialConnection()
     if(DATA_SET_READY != (DATA_SET_READY & serialport->pinoutSignals()))
     {
         QMessageBox msgBox;
-        msgBox.setText("The SCOTBOT controller is not connected to this COM port!");
+        msgBox.setText("The SCORBOT controller is not connected to this COM port!");
         msgBox.exec();
         return false;
     }
